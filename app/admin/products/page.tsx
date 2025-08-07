@@ -22,48 +22,32 @@ interface Product {
 
 export default function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    // Load products from localStorage
-    const savedProducts = localStorage.getItem('sarda-products')
-    if (savedProducts) {
-      setProducts(JSON.parse(savedProducts))
-    } else {
-      // Default products
-      const defaultProducts = [
-        {
-          id: 1,
-          name: "Klasik Kilim Koleksiyonu",
-          category: "Kilim",
-          image: "/placeholder-9jf2k.png",
-          description: "Geleneksel Anadolu motifleri ile modern tasarımın buluştuğu özel koleksiyon",
-          features: ["100% Doğal Yün", "El Dokuma Tekniği", "Geleneksel Motifler"],
-          colors: ["Kırmızı", "Mavi", "Bej"],
-          sizes: ["120x180 cm", "160x230 cm"],
-          specifications: { "Malzeme": "100% Yün", "Köken": "Gaziantep" }
-        },
-        {
-          id: 2,
-          name: "Modern Bukle Serisi",
-          category: "Bukle",
-          image: "/neutral-boucle-fabric.png",
-          description: "Çağdaş yaşam alanları için tasarlanmış premium bukle kumaşlar",
-          features: ["Premium Kalite", "Yumuşak Dokunuş", "Modern Tasarım"],
-          colors: ["Krem", "Gri", "Bej"],
-          sizes: ["140 cm genişlik"],
-          specifications: { "Malzeme": "Polyester", "Köken": "Gaziantep" }
-        }
-      ]
-      setProducts(defaultProducts)
-      localStorage.setItem('sarda-products', JSON.stringify(defaultProducts))
+    const load = async () => {
+      try {
+        const res = await fetch('/api/products', { cache: 'no-store' })
+        if (!res.ok) throw new Error('failed')
+        const data: Product[] = await res.json()
+        setProducts(data)
+      } catch {
+        setProducts([])
+      } finally {
+        setLoading(false)
+      }
     }
+    load()
   }, [])
 
-  const deleteProduct = (id: number) => {
-    if (confirm('Bu ürünü silmek istediğinizden emin misiniz?')) {
-      const updatedProducts = products.filter(product => product.id !== id)
-      setProducts(updatedProducts)
-      localStorage.setItem('sarda-products', JSON.stringify(updatedProducts))
+  const deleteProduct = async (id: number) => {
+    if (!confirm('Bu ürünü silmek istediğinizden emin misiniz?')) return
+    const prev = products
+    setProducts(prev.filter(p => p.id !== id))
+    const res = await fetch(`/api/products/${id}`, { method: 'DELETE' })
+    if (!res.ok) {
+      setProducts(prev)
+      alert('Silme işlemi başarısız oldu')
     }
   }
 
@@ -97,7 +81,17 @@ export default function AdminProducts() {
           <p className="text-gray-600 mt-2">Tüm ürünlerinizi buradan yönetebilirsiniz</p>
         </div>
 
-        {products.length === 0 ? (
+        {loading ? (
+          <Card className="border-0 shadow-sm">
+            <CardContent className="p-12 text-center">
+              <div className="text-gray-400 mb-4">
+                <Package className="h-16 w-16 mx-auto animate-pulse" />
+              </div>
+              <h3 className="text-lg font-semibold text-black mb-2">Yükleniyor...</h3>
+              <p className="text-gray-600 mb-6">Lütfen bekleyin</p>
+            </CardContent>
+          </Card>
+        ) : products.length === 0 ? (
           <Card className="border-0 shadow-sm">
             <CardContent className="p-12 text-center">
               <div className="text-gray-400 mb-4">

@@ -1,16 +1,14 @@
 'use client'
 
 import Link from "next/link"
-import { Package, Plus, Settings, BarChart3, Users, ShoppingBag } from 'lucide-react'
+import { Package, Plus, Settings, ShoppingBag } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-const adminStats = [
-  { title: "Toplam Ürün", value: "24", icon: Package, color: "bg-blue-500" },
-  { title: "Kategoriler", value: "2", icon: ShoppingBag, color: "bg-green-500" },
-  { title: "Aktif Ürünler", value: "22", icon: BarChart3, color: "bg-purple-500" },
-  { title: "Görüntülenme", value: "1,234", icon: Users, color: "bg-orange-500" }
-]
+import { useEffect, useState } from 'react'
+
+interface StatItem { title: string; value: string; icon: any; color: string }
+
 
 const quickActions = [
   { title: "Yeni Ürün Ekle", description: "Sisteme yeni ürün ekleyin", href: "/admin/products/add", icon: Plus },
@@ -19,6 +17,39 @@ const quickActions = [
 ]
 
 export default function AdminDashboard() {
+  const [stats, setStats] = useState<StatItem[]>([])
+  const [activities, setActivities] = useState<{ id: number; message: string; createdAt: number }[]>([])
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const [prodRes, actRes] = await Promise.all([
+          fetch('/api/products', { cache: 'no-store' }),
+          fetch('/api/activity', { cache: 'no-store' }),
+        ])
+        const products = prodRes.ok ? await prodRes.json() : []
+        const acts = actRes.ok ? await actRes.json() : []
+
+        const categories = new Set<string>()
+        products.forEach((p: any) => categories.add(p.category))
+        const s: StatItem[] = [
+          { title: 'Toplam Ürün', value: String(products.length), icon: Package, color: 'bg-blue-500' },
+          { title: 'Kategoriler', value: String(categories.size), icon: ShoppingBag, color: 'bg-green-500' },
+          { title: 'Aktif Ürünler', value: String(products.length), icon: Package, color: 'bg-purple-500' },
+        ]
+        setStats(s)
+        setActivities(acts.slice(0, 10))
+      } catch {
+        setStats([
+          { title: 'Toplam Ürün', value: '0', icon: Package, color: 'bg-blue-500' },
+          { title: 'Kategoriler', value: '0', icon: ShoppingBag, color: 'bg-green-500' },
+          { title: 'Aktif Ürünler', value: '0', icon: Package, color: 'bg-purple-500' },
+        ])
+      }
+    }
+    load()
+  }, [])
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -53,7 +84,7 @@ export default function AdminDashboard() {
 
         {/* Stats Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {adminStats.map((stat, index) => (
+          {stats.map((stat, index) => (
             <Card key={index} className="border-0 shadow-sm hover:shadow-md transition-shadow">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
@@ -103,21 +134,17 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="text-gray-700">Yeni ürün eklendi: "Premium Bukle Serisi"</span>
-                <span className="text-sm text-gray-500 ml-auto">2 saat önce</span>
-              </div>
-              <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span className="text-gray-700">Ürün güncellendi: "Klasik Kilim Koleksiyonu"</span>
-                <span className="text-sm text-gray-500 ml-auto">5 saat önce</span>
-              </div>
-              <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                <span className="text-gray-700">Site ayarları güncellendi</span>
-                <span className="text-sm text-gray-500 ml-auto">1 gün önce</span>
-              </div>
+              {activities.length === 0 ? (
+                <div className="text-gray-600">Henüz aktivite yok</div>
+              ) : (
+                activities.map((a) => (
+                  <div key={a.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="text-gray-700">{a.message}</span>
+                    <span className="text-sm text-gray-500 ml-auto">{new Date(a.createdAt).toLocaleString()}</span>
+                  </div>
+                ))
+              )}
             </div>
           </CardContent>
         </Card>

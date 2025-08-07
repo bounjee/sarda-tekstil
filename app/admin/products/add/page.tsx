@@ -19,8 +19,26 @@ export default function AddProduct() {
     features: [''],
     colors: [''],
     sizes: [''],
-    specifications: { 'Malzeme': '', 'Köken': 'Gaziantep, Türkiye' }
+    specifications: { 'Malzeme': '', 'Köken': 'Gaziantep, Türkiye', 'Teknik': '', 'Genişlik': '', 'Ağırlık': '', 'Kullanım': '' }
   })
+  const [uploading, setUploading] = useState(false)
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    const body = new FormData()
+    body.append('file', file)
+    const res = await fetch('/api/upload', { method: 'POST', body })
+    if (!res.ok) {
+      alert('Dosya yüklenemedi')
+      setUploading(false)
+      return
+    }
+    const json = await res.json()
+    setFormData(prev => ({ ...prev, image: json.url }))
+    setUploading(false)
+  }
 
   const addFeature = () => {
     setFormData(prev => ({
@@ -92,25 +110,27 @@ export default function AddProduct() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
-    // Get existing products
-    const existingProducts = JSON.parse(localStorage.getItem('sarda-products') || '[]')
-    
-    // Create new product
-    const newProduct = {
-      id: Date.now(),
+
+    const payload = {
       ...formData,
       features: formData.features.filter(f => f.trim() !== ''),
       colors: formData.colors.filter(c => c.trim() !== ''),
-      sizes: formData.sizes.filter(s => s.trim() !== '')
+      sizes: formData.sizes.filter(s => s.trim() !== ''),
     }
-    
-    // Save to localStorage
-    const updatedProducts = [...existingProducts, newProduct]
-    localStorage.setItem('sarda-products', JSON.stringify(updatedProducts))
-    
+
+    const res = await fetch('/api/products', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+
+    if (!res.ok) {
+      alert('Ürün eklenemedi')
+      return
+    }
+
     alert('Ürün başarıyla eklendi!')
     window.location.href = '/admin/products'
   }
@@ -170,13 +190,13 @@ export default function AddProduct() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="image">Görsel URL</Label>
-                    <Input
-                      id="image"
-                      value={formData.image}
-                      onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
-                      placeholder="/placeholder.svg"
-                    />
+                    <Label htmlFor="image">Görsel</Label>
+                    <div className="flex items-center gap-3">
+                      <Input id="image" value={formData.image} onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))} placeholder="/placeholder.svg" />
+                      <input type="file" accept="image/*" onChange={handleFileChange} />
+                    </div>
+                    {uploading && <p className="text-sm text-gray-500">Yükleniyor...</p>}
+                    {formData.image && <p className="text-sm text-gray-600">Seçili: {formData.image}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -295,6 +315,42 @@ export default function AddProduct() {
                       id="origin"
                       value={formData.specifications.Köken}
                       onChange={(e) => updateSpecification('Köken', e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="technique">Teknik</Label>
+                    <Input
+                      id="technique"
+                      value={(formData.specifications as any).Teknik || ''}
+                      onChange={(e) => updateSpecification('Teknik', e.target.value)}
+                      placeholder="Örn: El Dokuma"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="width">Genişlik</Label>
+                    <Input
+                      id="width"
+                      value={(formData.specifications as any).Genişlik || ''}
+                      onChange={(e) => updateSpecification('Genişlik', e.target.value)}
+                      placeholder="Örn: 140 cm"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="weight">Ağırlık</Label>
+                    <Input
+                      id="weight"
+                      value={(formData.specifications as any).Ağırlık || ''}
+                      onChange={(e) => updateSpecification('Ağırlık', e.target.value)}
+                      placeholder="Örn: 450 gr/m²"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="usage">Kullanım</Label>
+                    <Input
+                      id="usage"
+                      value={(formData.specifications as any).Kullanım || ''}
+                      onChange={(e) => updateSpecification('Kullanım', e.target.value)}
+                      placeholder="Örn: Mobilya Döşemelik"
                     />
                   </div>
                 </div>

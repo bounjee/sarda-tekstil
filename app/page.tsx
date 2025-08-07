@@ -7,40 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { CountUp } from "@/components/count-up"
 
-const products = [
-  {
-    id: 1,
-    name: "Klasik Kilim Koleksiyonu",
-    category: "Kilim",
-    image: "/placeholder-9jf2k.png",
-    price: "₺2,500 - ₺8,000",
-    description: "Geleneksel Anadolu motifleri ile modern tasarımın buluştuğu özel koleksiyon"
-  },
-  {
-    id: 2,
-    name: "Modern Bukle Serisi",
-    category: "Bukle",
-    image: "/neutral-boucle-fabric.png",
-    price: "₺1,800 - ₺5,500",
-    description: "Çağdaş yaşam alanları için tasarlanmış premium bukle kumaşlar"
-  },
-  {
-    id: 3,
-    name: "Vintage Kilim Koleksiyonu",
-    category: "Kilim",
-    image: "/vintage-kilim-rug.png",
-    price: "₺3,200 - ₺12,000",
-    description: "Zamansız güzelliği yansıtan vintage tarzı kilim koleksiyonu"
-  },
-  {
-    id: 4,
-    name: "Lüks Bukle Serisi",
-    category: "Bukle",
-    image: "/placeholder-plaqn.png",
-    price: "₺2,800 - ₺9,500",
-    description: "Yüksek kalite standartlarında üretilen lüks bukle kumaşlar"
-  }
-]
+type HomeProduct = { id: number; name: string; category: string; image: string; description: string }
+import { useEffect, useState } from 'react'
+const productsInitial: HomeProduct[] = []
 
 const stats = [
   { 
@@ -70,6 +39,22 @@ const stats = [
 ]
 
 export default function HomePage() {
+  const [latest, setLatest] = useState<HomeProduct[]>([])
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch('/api/products', { cache: 'no-store' })
+        if (res.ok) {
+          const data = await res.json()
+          // en son eklenen ilk sırada olacak şekilde
+          const sorted = [...data].sort((a: any, b: any) => b.id - a.id)
+          setLatest(sorted.slice(0, 8))
+        }
+      } catch {}
+    }
+    load()
+  }, [])
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -182,9 +167,9 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {products.map((product, index) => (
-              <Link key={product.id} href={`/product/${product.id}`} onClick={() => window.scrollTo(0, 0)}>
+          <div className="flex gap-6 overflow-x-auto pb-2">
+            {latest.map((product, index) => (
+              <Link key={product.id} href={`/product/${product.id}`} onClick={() => window.scrollTo(0, 0)} className="basis-3/4 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 flex-shrink-0">
                 <Card className="group cursor-pointer border-0 shadow-sm hover:shadow-xl transition-all duration-300 animate-fade-in-up bg-white h-full" style={{ animationDelay: `${index * 0.1}s` }}>
                   <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
                     <Image

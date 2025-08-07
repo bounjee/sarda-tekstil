@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ArrowLeft, Save, Globe, Mail, Phone, MapPin } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -35,9 +35,33 @@ export default function AdminSettings() {
       enableNewsletter: false
     }
   })
+  const [loading, setLoading] = useState(true)
 
-  const handleSave = () => {
-    localStorage.setItem('sarda-settings', JSON.stringify(settings))
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch('/api/settings', { cache: 'no-store' })
+        if (res.ok) {
+          const json = await res.json()
+          setSettings(json)
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
+    load()
+  }, [])
+
+  const handleSave = async () => {
+    const res = await fetch('/api/settings', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(settings),
+    })
+    if (!res.ok) {
+      alert('Ayarlar kaydedilemedi')
+      return
+    }
     alert('Ayarlar başarıyla kaydedildi!')
   }
 
@@ -83,6 +107,7 @@ export default function AdminSettings() {
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-black">Site Ayarları</h1>
             <p className="text-gray-600 mt-2">Web sitenizin genel ayarlarını buradan yönetebilirsiniz</p>
+            {loading && <p className="text-gray-400 mt-2">Yükleniyor...</p>}
           </div>
 
           <div className="space-y-8">

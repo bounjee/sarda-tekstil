@@ -25,20 +25,24 @@ interface Product {
 export default function EditProduct({ params }: { params: Promise<{ id: string }> }) {
   const [formData, setFormData] = useState<Product | null>(null)
   const [loading, setLoading] = useState(true)
+  const [uploading, setUploading] = useState(false)
 
   const resolvedParams = use(params)
 
   useEffect(() => {
-    // Load product from localStorage
-    const savedProducts = localStorage.getItem('sarda-products')
-    if (savedProducts) {
-      const products = JSON.parse(savedProducts)
-      const product = products.find((p: Product) => p.id === parseInt(resolvedParams.id))
-      if (product) {
+    const load = async () => {
+      try {
+        const res = await fetch(`/api/products/${resolvedParams.id}`, { cache: 'no-store' })
+        if (!res.ok) throw new Error('not found')
+        const product: Product = await res.json()
         setFormData(product)
+      } catch (e) {
+        setFormData(null)
+      } finally {
+        setLoading(false)
       }
     }
-    setLoading(false)
+    load()
   }, [resolvedParams.id])
 
   if (loading) {
@@ -128,27 +132,44 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
     }) : null)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file || !formData) return
+    setUploading(true)
+    const body = new FormData()
+    body.append('file', file)
+    const res = await fetch('/api/upload', { method: 'POST', body })
+    if (!res.ok) {
+      alert('Dosya yüklenemedi')
+      setUploading(false)
+      return
+    }
+    const json = await res.json()
+    setFormData(prev => prev ? ({ ...prev, image: json.url }) : null)
+    setUploading(false)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
     if (!formData) return
-    
-    // Get existing products
-    const existingProducts = JSON.parse(localStorage.getItem('sarda-products') || '[]')
-    
-    // Update product
-    const updatedProducts = existingProducts.map((p: Product) => 
-      p.id === formData.id ? {
-        ...formData,
-        features: formData.features.filter(f => f.trim() !== ''),
-        colors: formData.colors.filter(c => c.trim() !== ''),
-        sizes: formData.sizes.filter(s => s.trim() !== '')
-      } : p
-    )
-    
-    // Save to localStorage
-    localStorage.setItem('sarda-products', JSON.stringify(updatedProducts))
-    
+
+    const payload = {
+      ...formData,
+      features: formData.features.filter(f => f.trim() !== ''),
+      colors: formData.colors.filter(c => c.trim() !== ''),
+      sizes: formData.sizes.filter(s => s.trim() !== ''),
+    }
+
+    const res = await fetch(`/api/products/${formData.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+
+    if (!res.ok) {
+      alert('Güncelleme başarısız oldu')
+      return
+    }
     alert('Ürün başarıyla güncellendi!')
     window.location.href = '/admin/products'
   }
@@ -208,13 +229,13 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="image">Görsel URL</Label>
-                    <Input
-                      id="image"
-                      value={formData.image}
-                      onChange={(e) => setFormData(prev => prev ? ({ ...prev, image: e.target.value }) : null)}
-                      placeholder="/placeholder.svg"
-                    />
+                    <Label htmlFor="image">Görsel</Label>
+                    <div className="flex items-center gap-3">
+                      <Input id="image" value={formData.image} onChange={(e) => setFormData(prev => prev ? ({ ...prev, image: e.target.value }) : null)} placeholder="/placeholder.svg" />
+                      <input type="file" accept="image/*" onChange={handleFileChange} />
+                    </div>
+                    {uploading && <p className="text-sm text-gray-500">Yükleniyor...</p>}
+                    {formData.image && <p className="text-sm text-gray-600">Seçili: {formData.image}</p>}
                   </div>
 
                   <div className="space-y-2">

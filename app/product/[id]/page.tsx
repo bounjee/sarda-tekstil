@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useState, use } from "react"
+import { useEffect, useState, use } from "react"
 import { ArrowLeft, Heart, Share2 } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -10,82 +10,69 @@ import { Separator } from "@/components/ui/separator"
 import { PriceQuoteModal } from "@/components/price-quote-modal"
 import { ShareModal } from "@/components/share-modal"
 
-const products = {
-  1: {
-    id: 1,
-    name: "Klasik Kilim Koleksiyonu",
-    category: "Kilim",
-    price: "₺2,500 - ₺8,000",
-    rating: 4.8,
-    reviews: 24,
-    images: [
-      "/placeholder-j5i2h.png",
-      "/turkish-kilim-detail.png",
-      "/turkish-kilim-living-room.png",
-      "/turkish-kilim-detail.png"
-    ],
-    description: "Geleneksel Anadolu motifleri ile modern tasarımın buluştuğu özel koleksiyon. Her bir kilim, ustalarımız tarafından özenle dokunarak üretilmektedir.",
-    features: [
-      "100% Doğal Yün",
-      "El Dokuma Tekniği",
-      "Geleneksel Motifler",
-      "Dayanıklı Yapı",
-      "Renk Haslığı Garantili"
-    ],
-    specifications: {
-      "Malzeme": "100% Yün",
-      "Teknik": "El Dokuma",
-      "Köken": "Gaziantep, Türkiye",
-      "Boyutlar": "120x180 cm, 160x230 cm, 200x300 cm",
-      "Kalınlık": "8-12 mm",
-      "Ağırlık": "2.5-4.5 kg/m²"
-    },
-    colors: ["Kırmızı", "Mavi", "Bej", "Antrasit"],
-    sizes: ["120x180 cm", "160x230 cm", "200x300 cm"]
-  },
-  2: {
-    id: 2,
-    name: "Modern Bukle Serisi",
-    category: "Bukle",
-    price: "₺1,800 - ₺5,500",
-    rating: 4.9,
-    reviews: 18,
-    images: [
-      "/neutral-boucle-fabric.png",
-      "/premium-boucle-fabric.png",
-      "/neutral-boucle-fabric.png",
-      "/premium-boucle-fabric.png"
-    ],
-    description: "Çağdaş yaşam alanları için tasarlanmış premium bukle kumaşlar. Yumuşak dokusu ve modern görünümü ile mekanlarınıza şıklık katar.",
-    features: [
-      "Premium Kalite Elyaf",
-      "Yumuşak Dokunuş",
-      "Modern Tasarım",
-      "Kolay Bakım",
-      "Renk Çeşitliliği"
-    ],
-    specifications: {
-      "Malzeme": "Polyester & Akrilik Karışımı",
-      "Teknik": "Bukle Dokuma",
-      "Köken": "Gaziantep, Türkiye",
-      "Genişlik": "140 cm",
-      "Ağırlık": "450 gr/m²",
-      "Kullanım": "Mobilya Döşemelik"
-    },
-    colors: ["Krem", "Gri", "Bej", "Kahverengi"],
-    sizes: ["140 cm genişlik", "Metraj satış"]
-  }
+interface ProductDetails {
+  id: number
+  name: string
+  category: string
+  images: string[]
+  description: string
+  features: string[]
+  specifications: Record<string, string>
+  colors: string[]
+  sizes: string[]
 }
 
 export default function ProductDetail({ params }: { params: Promise<{ id: string }> }) {
   const [showPriceModal, setShowPriceModal] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
   const [selectedImage, setSelectedImage] = useState(0)
-  
+  const [product, setProduct] = useState<ProductDetails | null>(null)
+  const [loading, setLoading] = useState(true)
+
   const resolvedParams = use(params)
   const productId = parseInt(resolvedParams.id)
-  const product = products[productId as keyof typeof products]
-  
+
+  useEffect(() => {
+    const load = async () => {
+      setLoading(true)
+      try {
+        const res = await fetch(`/api/products/${productId}`, { cache: 'no-store' })
+        if (res.ok) {
+          const p = await res.json()
+          const transformed: ProductDetails = {
+            id: p.id,
+            name: p.name,
+            category: p.category,
+            images: [p.image || '/placeholder.svg'],
+            description: p.description,
+            features: Array.isArray(p.features) ? p.features : [],
+            specifications: p.specifications || {},
+            colors: Array.isArray(p.colors) ? p.colors : [],
+            sizes: Array.isArray(p.sizes) ? p.sizes : [],
+          }
+          setProduct(transformed)
+        } else {
+          setProduct(null)
+        }
+      } catch {
+        setProduct(null)
+      } finally {
+        setLoading(false)
+      }
+    }
+    load()
+  }, [productId])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <h1 className="text-2xl font-bold text-gray-900">Yükleniyor...</h1>
+        </div>
+      </div>
+    )
+  }
+
   if (!product) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -155,7 +142,7 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
           <div className="space-y-4">
             <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100">
               <Image
-                src={product.images[selectedImage] || "/placeholder.svg"}
+                 src={product.images[selectedImage] || "/placeholder.svg"}
                 alt={product.name}
                 width={800}
                 height={600}
@@ -164,7 +151,7 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
               />
             </div>
             <div className="grid grid-cols-4 gap-4">
-              {product.images.map((image, index) => (
+                {product.images.map((image: string, index: number) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
@@ -199,7 +186,7 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-black">Özellikler</h3>
               <div className="grid grid-cols-2 gap-3">
-                {product.features.map((feature, index) => (
+                {product.features.map((feature: string, index: number) => (
                   <div key={index} className="p-3 bg-gray-50 rounded-lg">
                     <span className="text-gray-700 font-medium">{feature}</span>
                   </div>
@@ -211,7 +198,7 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-black">Renk Seçenekleri</h3>
               <div className="flex flex-wrap gap-3">
-                {product.colors.map((color, index) => (
+                {product.colors.map((color: string, index: number) => (
                   <div key={index} className="px-6 py-3 border-2 border-gray-300 rounded-lg text-gray-700 font-medium hover:border-black transition-colors cursor-pointer">
                     {color}
                   </div>
@@ -223,7 +210,7 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-black">Boyut Seçenekleri</h3>
               <div className="flex flex-wrap gap-3">
-                {product.sizes.map((size, index) => (
+                {product.sizes.map((size: string, index: number) => (
                   <div key={index} className="px-6 py-3 border-2 border-gray-300 rounded-lg text-gray-700 font-medium hover:border-black transition-colors cursor-pointer">
                     {size}
                   </div>
@@ -263,10 +250,10 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
             <CardContent className="p-8">
               <h3 className="text-2xl font-bold text-black mb-6">Teknik Özellikler</h3>
               <div className="grid md:grid-cols-2 gap-6">
-                {Object.entries(product.specifications).map(([key, value], index) => (
+                {Object.entries(product.specifications as Record<string, string>).map(([key, value]: [string, string], index: number) => (
                   <div key={index} className="flex justify-between items-center py-4 border-b border-gray-100 last:border-b-0">
                     <span className="font-bold text-black">{key}</span>
-                    <span className="text-gray-700">{value}</span>
+                    <span className="text-gray-700">{String(value)}</span>
                   </div>
                 ))}
               </div>
