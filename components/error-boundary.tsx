@@ -66,7 +66,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
               <div className="flex gap-2">
                 <Button 
                   onClick={this.resetError}
-                  className="flex-1 bg-black hover:bg-gray-800"
+                  className="flex-1"
                 >
                   <RefreshCw className="mr-2 h-4 w-4" />
                   Tekrar Dene

@@ -30,11 +30,9 @@ export default function AdminDashboard() {
         const products = prodRes.ok ? await prodRes.json() : []
         const acts = actRes.ok ? await actRes.json() : []
 
-        const categories = new Set<string>()
-        products.forEach((p: any) => categories.add(p.category))
         const s: StatItem[] = [
           { title: 'Toplam Ürün', value: String(products.length), icon: Package, color: 'bg-blue-500' },
-          { title: 'Kategoriler', value: String(categories.size), icon: ShoppingBag, color: 'bg-green-500' },
+          // Kategori metriği kaldırıldı
           { title: 'Aktif Ürünler', value: String(products.length), icon: Package, color: 'bg-purple-500' },
         ]
         setStats(s)
@@ -42,7 +40,6 @@ export default function AdminDashboard() {
       } catch {
         setStats([
           { title: 'Toplam Ürün', value: '0', icon: Package, color: 'bg-blue-500' },
-          { title: 'Kategoriler', value: '0', icon: ShoppingBag, color: 'bg-green-500' },
           { title: 'Aktif Ürünler', value: '0', icon: Package, color: 'bg-purple-500' },
         ])
       }
@@ -58,7 +55,7 @@ export default function AdminDashboard() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Link href="/" className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-black rounded-sm flex items-center justify-center">
+                <div className="w-8 h-8 bg-primary rounded-sm flex items-center justify-center">
                   <span className="text-white font-bold text-sm">S</span>
                 </div>
                 <span className="text-xl font-bold text-black">Sarda Tekstil</span>
@@ -110,7 +107,7 @@ export default function AdminDashboard() {
                 <Link href={action.href}>
                   <CardContent className="p-6">
                     <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center group-hover:bg-gray-800 transition-colors">
+                      <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center transition-colors">
                         <action.icon className="h-6 w-6 text-white" />
                       </div>
                       <div>

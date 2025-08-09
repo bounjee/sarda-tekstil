@@ -1,7 +1,6 @@
 'use client'
 
 import Link from "next/link"
-import Image from "next/image"
 import { ArrowLeft, Shield, Award, CheckCircle, Target, Users, Zap } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -73,9 +72,11 @@ export default function QualityPolicyPage() {
                 İletişim
               </Link>
             </nav>
-            <Button className="bg-black hover:bg-gray-800 text-white">
-              Katalog İndir
-            </Button>
+            <a href="https://wa.me/905555555555" target="_blank" rel="noopener noreferrer">
+              <Button>
+                Whatsapp İletişim
+              </Button>
+            </a>
           </div>
         </div>
       </header>
@@ -115,7 +116,7 @@ export default function QualityPolicyPage() {
             {qualityPrinciples.map((principle, index) => (
               <Card key={index} className="text-center border-0 shadow-sm hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-8 space-y-4">
-                  <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto">
+                   <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto">
                     <principle.icon className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-black">{principle.title}</h3>
@@ -161,13 +162,16 @@ export default function QualityPolicyPage() {
             </div>
             
             <div className="relative">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100">
-                <Image
-                  src="/kilim-weavers.png"
-                  alt="Kalite Kontrol"
-                  width={600}
-                  height={500}
-                  className="w-full h-full object-cover"
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-black shadow-lg ring-1 ring-black/5">
+                <video
+                  src="/tv8_5.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  controls
+                  playsInline
+                  className="w-full h-full object-cover object-left"
+                  poster="/placeholder-yaa84.png"
                 />
               </div>
             </div>
@@ -189,7 +193,7 @@ export default function QualityPolicyPage() {
             {certifications.map((cert, index) => (
               <Card key={index} className="text-center border-0 shadow-sm hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-6 space-y-3">
-                  <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mx-auto">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto">
                     <Award className="h-6 w-6 text-white" />
                   </div>
                   <h3 className="font-semibold text-black">{cert.name}</h3>
@@ -205,7 +209,7 @@ export default function QualityPolicyPage() {
       <section className="container mx-auto px-4 pb-12">
         <div className="text-center">
           <Link href="/" onClick={() => window.scrollTo(0, 0)}>
-            <Button variant="outline" className="border-black text-black hover:bg-black hover:text-white">
+            <Button variant="outline">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Ana Sayfaya Dön
             </Button>

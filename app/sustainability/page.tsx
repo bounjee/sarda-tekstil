@@ -1,7 +1,6 @@
 'use client'
 
 import Link from "next/link"
-import Image from "next/image"
 import { ArrowLeft, Leaf, Recycle, Droplets, Sun, Heart, Globe } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -89,9 +88,11 @@ export default function SustainabilityPage() {
                 İletişim
               </Link>
             </nav>
-            <Button className="bg-black hover:bg-gray-800 text-white">
-              Katalog İndir
-            </Button>
+            <a href="https://wa.me/905555555555" target="_blank" rel="noopener noreferrer">
+              <Button>
+                Whatsapp İletişim
+              </Button>
+            </a>
           </div>
         </div>
       </header>
@@ -174,13 +175,16 @@ export default function SustainabilityPage() {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100">
-                <Image
-                  src="/kilim-weavers.png"
-                  alt="Sürdürülebilir Üretim"
-                  width={600}
-                  height={500}
-                  className="w-full h-full object-cover"
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-black shadow-lg ring-1 ring-black/5">
+                <video
+                  src="/tv8_5.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  controls
+                  playsInline
+                  className="w-full h-full object-cover object-left"
+                  poster="/placeholder-yaa84.png"
                 />
               </div>
             </div>
@@ -261,7 +265,7 @@ export default function SustainabilityPage() {
       <section className="container mx-auto px-4 pb-12">
         <div className="text-center">
           <Link href="/" onClick={() => window.scrollTo(0, 0)}>
-            <Button variant="outline" className="border-black text-black hover:bg-black hover:text-white">
+            <Button variant="outline">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Ana Sayfaya Dön
             </Button>

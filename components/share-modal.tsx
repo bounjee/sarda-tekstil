@@ -19,6 +19,7 @@ export function ShareModal({ isOpen, onClose, productName, productUrl }: ShareMo
   const { toast } = useToast()
 
   const shareText = `${productName} - Sarda Tekstil'den kaliteli tekstil ürünleri`
+  const canShare = typeof navigator !== 'undefined' && typeof (navigator as any).share === 'function'
 
   const handleNativeShare = async () => {
     if (navigator.share) {
@@ -122,10 +123,10 @@ export function ShareModal({ isOpen, onClose, productName, productUrl }: ShareMo
           </div>
 
           {/* Native Share (if supported) */}
-          {navigator.share && (
+          {canShare && (
             <Button
               onClick={handleNativeShare}
-              className="w-full bg-black hover:bg-gray-800"
+              className="w-full"
             >
               <Share2 className="mr-2 h-4 w-4" />
               Paylaş

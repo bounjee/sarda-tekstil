@@ -353,7 +353,7 @@ export function PriceQuoteModal({ isOpen, onClose, productName, productId }: Pri
                   </Button>
                   <Button
                     type="submit"
-                    className="flex-1 bg-black hover:bg-gray-800"
+                    className="flex-1"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (

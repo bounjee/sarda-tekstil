@@ -3,29 +3,24 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState, use } from "react"
-import { ArrowLeft, Heart, Share2 } from 'lucide-react'
+import { ArrowLeft, MessageCircle } from 'lucide-react'
+import { STANDARD_SIZES } from '@/lib/constants'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { PriceQuoteModal } from "@/components/price-quote-modal"
-import { ShareModal } from "@/components/share-modal"
+// removed modal usage per new UX
 
 interface ProductDetails {
   id: number
   name: string
-  category: string
   images: string[]
-  description: string
-  features: string[]
-  specifications: Record<string, string>
-  colors: string[]
   sizes: string[]
 }
 
 export default function ProductDetail({ params }: { params: Promise<{ id: string }> }) {
-  const [showPriceModal, setShowPriceModal] = useState(false)
-  const [showShareModal, setShowShareModal] = useState(false)
+  // modals removed
   const [selectedImage, setSelectedImage] = useState(0)
+  const [selectedSize, setSelectedSize] = useState<string | null>(null)
   const [product, setProduct] = useState<ProductDetails | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -42,15 +37,11 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
           const transformed: ProductDetails = {
             id: p.id,
             name: p.name,
-            category: p.category,
             images: [p.image || '/placeholder.svg'],
-            description: p.description,
-            features: Array.isArray(p.features) ? p.features : [],
-            specifications: p.specifications || {},
-            colors: Array.isArray(p.colors) ? p.colors : [],
             sizes: Array.isArray(p.sizes) ? p.sizes : [],
           }
           setProduct(transformed)
+          setSelectedSize(STANDARD_SIZES[0] || null)
         } else {
           setProduct(null)
         }
@@ -80,7 +71,7 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
           <h1 className="text-2xl font-bold text-gray-900">Ürün Bulunamadı</h1>
           <p className="text-gray-600">Aradığınız ürün mevcut değil veya kaldırılmış olabilir.</p>
           <Link href="/products">
-            <Button className="bg-black hover:bg-gray-800 text-white">
+            <Button>
               <ArrowLeft className="mr-2 h-4 w-4" />
               Ürünlere Dön
             </Button>
@@ -90,7 +81,11 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
     )
   }
 
-  const currentUrl = typeof window !== 'undefined' ? window.location.href : ''
+  const whatsappHref = (size?: string) => {
+    const base = 'https://wa.me/905555555555'
+    const text = encodeURIComponent(`Merhaba, ${product?.name} ürünü için fiyat teklifi almak istiyorum${size ? ` (Boyut: ${size})` : ''}.`)
+    return `${base}?text=${text}`
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -118,9 +113,11 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
                 İletişim
               </Link>
             </nav>
-            <Button className="bg-black hover:bg-gray-800 text-white">
-              Katalog İndir
-            </Button>
+            <a href="https://wa.me/905555555555" target="_blank" rel="noopener noreferrer">
+              <Button>
+                Whatsapp İletişim
+              </Button>
+            </a>
           </div>
         </div>
       </header>
@@ -136,13 +133,13 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Product Images */}
-          <div className="space-y-4">
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100">
+      <div className="container mx-auto px-4 py-10">
+        <div className="grid lg:grid-cols-12 gap-10">
+          {/* Left: Image gallery */}
+          <div className="lg:col-span-7 space-y-4">
+            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 shadow-sm">
               <Image
-                 src={product.images[selectedImage] || "/placeholder.svg"}
+                src={product.images[selectedImage] || "/placeholder.svg"}
                 alt={product.name}
                 width={800}
                 height={600}
@@ -150,13 +147,13 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
                 priority
               />
             </div>
-            <div className="grid grid-cols-4 gap-4">
-                {product.images.map((image: string, index: number) => (
+            <div className="grid grid-cols-4 gap-3">
+              {product.images.map((image: string, index: number) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
                   className={`aspect-square rounded-lg overflow-hidden bg-gray-100 hover:opacity-80 transition-opacity ${
-                    selectedImage === index ? 'ring-2 ring-black' : ''
+                    selectedImage === index ? 'ring-2 ring-primary' : ''
                   }`}
                 >
                   <Image
@@ -171,100 +168,62 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
             </div>
           </div>
 
-          {/* Product Info */}
-          <div className="space-y-8">
-            <div className="space-y-4">
-              
-              <h1 className="text-3xl lg:text-4xl font-bold text-black">{product.name}</h1>
-              
-              
-              
-              <p className="text-lg text-gray-600 leading-relaxed">{product.description}</p>
-            </div>
+          {/* Right: Info + sizes + CTA */}
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-24">
+              <div className="space-y-6 rounded-2xl border border-gray-200 p-6 shadow-sm bg-white">
+                <h1 className="text-3xl lg:text-4xl font-bold text-black leading-tight">
+                  {product.name}
+                </h1>
 
-            {/* Features */}
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-black">Özellikler</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {product.features.map((feature: string, index: number) => (
-                  <div key={index} className="p-3 bg-gray-50 rounded-lg">
-                    <span className="text-gray-700 font-medium">{feature}</span>
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold text-black text-center lg:text-left">Boyut Seçenekleri</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {STANDARD_SIZES.map((size) => {
+                      const isActive = selectedSize === size
+                      return (
+                        <button
+                          key={size}
+                          type="button"
+                          onClick={() => setSelectedSize(size)}
+                          aria-pressed={isActive}
+                          className={`px-5 py-3 rounded-lg border font-medium transition-colors ${
+                            isActive
+                              ? 'bg-primary text-primary-foreground border-primary'
+                              : 'border-primary text-primary hover:bg-[hsl(var(--primary-hover))] hover:text-primary-foreground'
+                          }`}
+                        >
+                          {size}
+                        </button>
+                      )
+                    })}
                   </div>
-                ))}
-              </div>
-            </div>
+                  {selectedSize && (
+                    <div className="text-sm text-gray-600 text-center lg:text-left">
+                      Seçilen boyut: <span className="font-semibold text-black">{selectedSize}</span>
+                    </div>
+                  )}
+                </div>
 
-            {/* Colors */}
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-black">Renk Seçenekleri</h3>
-              <div className="flex flex-wrap gap-3">
-                {product.colors.map((color: string, index: number) => (
-                  <div key={index} className="px-6 py-3 border-2 border-gray-300 rounded-lg text-gray-700 font-medium hover:border-black transition-colors cursor-pointer">
-                    {color}
-                  </div>
-                ))}
+                <div className="pt-2">
+                  <a href={whatsappHref(selectedSize || undefined)} target="_blank" rel="noopener noreferrer">
+                    <Button size="lg" className="w-full justify-center">
+                      <MessageCircle className="mr-2 h-5 w-5" />
+                      Fiyat Teklifi Al (WhatsApp)
+                    </Button>
+                  </a>
+                </div>
               </div>
-            </div>
-
-            {/* Sizes */}
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-black">Boyut Seçenekleri</h3>
-              <div className="flex flex-wrap gap-3">
-                {product.sizes.map((size: string, index: number) => (
-                  <div key={index} className="px-6 py-3 border-2 border-gray-300 rounded-lg text-gray-700 font-medium hover:border-black transition-colors cursor-pointer">
-                    {size}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  size="lg" 
-                  className="bg-black hover:bg-gray-800 text-white flex-1"
-                  onClick={() => setShowPriceModal(true)}
-                >
-                  Fiyat Teklifi Al
-                </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-black text-black hover:bg-black hover:text-white"
-                  onClick={() => setShowShareModal(true)}
-                >
-                  <Share2 className="mr-2 h-4 w-4" />
-                  Paylaş
-                </Button>
-              </div>
-              
-              
             </div>
           </div>
         </div>
 
-        {/* Product Specifications */}
-        <div className="mt-16">
-          <Card>
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-black mb-6">Teknik Özellikler</h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                {Object.entries(product.specifications as Record<string, string>).map(([key, value]: [string, string], index: number) => (
-                  <div key={index} className="flex justify-between items-center py-4 border-b border-gray-100 last:border-b-0">
-                    <span className="font-bold text-black">{key}</span>
-                    <span className="text-gray-700">{String(value)}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        {/* specs removed per new UX */}
 
         {/* Back to Products */}
         <div className="mt-12 text-center">
           <Link href="/products" onClick={() => window.scrollTo(0, 0)}>
-            <Button variant="outline" className="border-black text-black hover:bg-black hover:text-white">
+            <Button variant="outline">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Tüm Ürünlere Dön
             </Button>
@@ -272,20 +231,7 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
         </div>
       </div>
 
-      {/* Modals */}
-      <PriceQuoteModal
-        isOpen={showPriceModal}
-        onClose={() => setShowPriceModal(false)}
-        productName={product.name}
-        productId={product.id}
-      />
-      
-      <ShareModal
-        isOpen={showShareModal}
-        onClose={() => setShowShareModal(false)}
-        productName={product.name}
-        productUrl={currentUrl}
-      />
+      {/* modals removed */}
 
       {/* Footer */}
       <footer className="bg-black text-white py-12 mt-16">

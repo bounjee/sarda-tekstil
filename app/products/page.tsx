@@ -14,9 +14,7 @@ import { ErrorBoundary } from "@/components/error-boundary"
 interface ListProduct {
   id: number
   name: string
-  category: string
   image: string
-  description: string
 }
 
 const defaultProducts: ListProduct[] = []
@@ -25,7 +23,7 @@ function ProductsContent() {
   const [products, setProducts] = useState<ListProduct[]>(defaultProducts)
   const [filteredProducts, setFilteredProducts] = useState<ListProduct[]>(defaultProducts)
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('Tümü')
+  // Kategori kaldırıldı
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [isLoading, setIsLoading] = useState(true)
 
@@ -55,23 +53,17 @@ function ProductsContent() {
   useEffect(() => {
     let filtered = products
 
-    // Filter by category
-    if (selectedCategory !== 'Tümü') {
-      filtered = filtered.filter(product => product.category === selectedCategory)
-    }
-
     // Filter by search term
     if (searchTerm) {
       filtered = filtered.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase())
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
 
     setFilteredProducts(filtered)
-  }, [products, selectedCategory, searchTerm])
+  }, [products, searchTerm])
 
-  const categories = ['Tümü', 'Kilim', 'Bukle']
+  // Kategori listesi kaldırıldı
 
   if (isLoading) {
     return (
@@ -133,9 +125,11 @@ function ProductsContent() {
                 İletişim
               </Link>
             </nav>
-            <Button className="bg-black hover:bg-gray-800 text-white">
-              Katalog İndir
-            </Button>
+            <a href="https://wa.me/905555555555" target="_blank" rel="noopener noreferrer">
+              <Button>
+                Whatsapp İletişim
+              </Button>
+            </a>
           </div>
         </div>
       </header>
@@ -174,19 +168,7 @@ function ProductsContent() {
             />
           </div>
 
-          {/* Category Filter */}
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                onClick={() => setSelectedCategory(category)}
-                className={selectedCategory === category ? "bg-black hover:bg-gray-800 text-white" : "border-gray-300 hover:border-black"}
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
+          {/* Category Filter kaldırıldı */}
 
           {/* View Mode Toggle */}
           <div className="flex border border-gray-300 rounded-lg overflow-hidden">
@@ -194,7 +176,7 @@ function ProductsContent() {
               variant={viewMode === 'grid' ? "default" : "ghost"}
               size="sm"
               onClick={() => setViewMode('grid')}
-              className={`rounded-none ${viewMode === 'grid' ? 'bg-black text-white' : ''}`}
+              className={`rounded-none ${viewMode === 'grid' ? '' : ''}`}
             >
               <Grid className="h-4 w-4" />
             </Button>
@@ -202,7 +184,7 @@ function ProductsContent() {
               variant={viewMode === 'list' ? "default" : "ghost"}
               size="sm"
               onClick={() => setViewMode('list')}
-              className={`rounded-none ${viewMode === 'list' ? 'bg-black text-white' : ''}`}
+              className={`rounded-none ${viewMode === 'list' ? '' : ''}`}
             >
               <List className="h-4 w-4" />
             </Button>
@@ -243,23 +225,17 @@ function ProductsContent() {
                   viewMode === 'list' ? 'justify-center' : ''
                 }`}>
                   <div className="space-y-2 flex-1">
-                    <div className="flex items-center justify-between">
-                      <Badge variant="secondary" className="bg-gray-100 text-gray-700">
-                        {product.category}
-                      </Badge>
-                    </div>
+                    {/* Kategori rozeti kaldırıldı */}
                     <h3 className="text-xl font-bold text-black group-hover:text-gray-700 transition-colors">
                       {product.name}
                     </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {product.description}
-                    </p>
+                    {/* açıklama kaldırıldı */}
                     {/* Fiyat etiketleri kaldırıldı */}
                   </div>
                   
                   <div className="pt-4 mt-auto">
                     <Link href={`/product/${product.id}`}>
-                      <Button className="w-full bg-black hover:bg-gray-800 text-white group-hover:bg-gray-900 transition-colors">
+                      <Button className="w-full transition-colors">
                         Detaylar
                       </Button>
                     </Link>
@@ -275,7 +251,7 @@ function ProductsContent() {
       <section className="container mx-auto px-4 pb-12">
         <div className="text-center">
           <Link href="/">
-            <Button variant="outline" className="border-black text-black hover:bg-black hover:text-white">
+            <Button variant="outline">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Ana Sayfaya Dön
             </Button>

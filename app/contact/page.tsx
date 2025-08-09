@@ -99,9 +99,11 @@ export default function ContactPage() {
                 İletişim
               </Link>
             </nav>
-            <Button className="bg-black hover:bg-gray-800 text-white">
-              Katalog İndir
-            </Button>
+            <a href="https://wa.me/905555555555" target="_blank" rel="noopener noreferrer">
+              <Button>
+                Whatsapp İletişim
+              </Button>
+            </a>
           </div>
         </div>
       </header>
@@ -133,7 +135,7 @@ export default function ContactPage() {
           {contactInfo.map((info, index) => (
             <Card key={index} className="text-center border-0 shadow-sm hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-8 space-y-4">
-                <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto">
+                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto">
                   <info.icon className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-black">{info.title}</h3>
@@ -236,7 +238,7 @@ export default function ContactPage() {
               />
             </div>
             
-            <Button type="submit" size="lg" className="w-full bg-black hover:bg-gray-800 text-white">
+            <Button type="submit" size="lg" className="w-full">
               <Send className="mr-2 h-4 w-4" />
               Mesaj Gönder
             </Button>
@@ -268,16 +270,16 @@ export default function ContactPage() {
 
     {/* Map & Additional Info */}
     <div className="space-y-8">
-      {/* Map Placeholder */}
+      {/* Map - Embedded (Gaziantep random placeholder) */}
       <Card className="border-0 shadow-lg">
         <CardContent className="p-0">
-          <div className="aspect-[4/3] bg-gray-100 rounded-lg overflow-hidden">
-            <Image
-              src="/gaziantep-map.png"
-              alt="Sarda Tekstil Konum"
-              width={600}
-              height={400}
-              className="w-full h-full object-cover"
+          <div className="aspect-[4/3] rounded-lg overflow-hidden">
+            <iframe
+              title="Sarda Tekstil Konum"
+              src="https://www.google.com/maps?q=Gaziantep%2C%20Turkey&hl=tr&z=13&output=embed"
+              className="w-full h-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
         </CardContent>
@@ -289,28 +291,28 @@ export default function ContactPage() {
           <h3 className="text-xl font-semibold text-black">Neden Sarda Tekstil?</h3>
           <div className="space-y-4">
             <div className="flex items-start space-x-3">
-              <div className="w-2 h-2 bg-black rounded-full mt-2"></div>
+              <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
               <div>
                 <h4 className="font-medium text-black">25+ Yıllık Deneyim</h4>
                 <p className="text-gray-600 text-sm">Sektördeki uzun deneyimimizle güvenilir çözümler sunuyoruz.</p>
               </div>
             </div>
             <div className="flex items-start space-x-3">
-              <div className="w-2 h-2 bg-black rounded-full mt-2"></div>
+              <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
               <div>
                 <h4 className="font-medium text-black">Kalite Garantisi</h4>
                 <p className="text-gray-600 text-sm">Tüm ürünlerimizde yüksek kalite standartlarını koruyoruz.</p>
               </div>
             </div>
             <div className="flex items-start space-x-3">
-              <div className="w-2 h-2 bg-black rounded-full mt-2"></div>
+              <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
               <div>
                 <h4 className="font-medium text-black">Hızlı Teslimat</h4>
                 <p className="text-gray-600 text-sm">Siparişlerinizi zamanında ve güvenli şekilde teslim ediyoruz.</p>
               </div>
             </div>
             <div className="flex items-start space-x-3">
-              <div className="w-2 h-2 bg-black rounded-full mt-2"></div>
+              <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
               <div>
                 <h4 className="font-medium text-black">Özel Tasarım</h4>
                 <p className="text-gray-600 text-sm">İhtiyaçlarınıza özel tasarım ve üretim hizmetleri sunuyoruz.</p>
@@ -327,7 +329,7 @@ export default function ContactPage() {
       <section className="container mx-auto px-4 pb-12">
         <div className="text-center">
           <Link href="/">
-            <Button variant="outline" className="border-black text-black hover:bg-black hover:text-white">
+            <Button variant="outline">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Ana Sayfaya Dön
             </Button>

@@ -11,7 +11,6 @@ import { Badge } from "@/components/ui/badge"
 interface Product {
   id: number
   name: string
-  category: string
   image: string
   description: string
   features: string[]
@@ -65,8 +64,8 @@ export default function AdminProducts() {
               <span className="text-gray-400">|</span>
               <span className="text-lg font-medium text-gray-700">Ürün Yönetimi</span>
             </div>
-            <Link href="/admin/products/add">
-              <Button className="bg-black hover:bg-gray-800 text-white">
+              <Link href="/admin/products/add">
+              <Button>
                 <Plus className="mr-2 h-4 w-4" />
                 Yeni Ürün
               </Button>
@@ -100,7 +99,7 @@ export default function AdminProducts() {
               <h3 className="text-lg font-semibold text-black mb-2">Henüz ürün yok</h3>
               <p className="text-gray-600 mb-6">İlk ürününüzü ekleyerek başlayın</p>
               <Link href="/admin/products/add">
-                <Button className="bg-black hover:bg-gray-800 text-white">
+                <Button>
                   <Plus className="mr-2 h-4 w-4" />
                   İlk Ürünü Ekle
                 </Button>
@@ -123,9 +122,6 @@ export default function AdminProducts() {
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Badge variant="secondary" className="bg-gray-100 text-gray-700">
-                        {product.category}
-                      </Badge>
                       <h3 className="text-lg font-semibold text-black">{product.name}</h3>
                       <p className="text-gray-600 text-sm line-clamp-2">{product.description}</p>
                     </div>

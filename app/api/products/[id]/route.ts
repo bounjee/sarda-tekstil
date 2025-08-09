@@ -7,13 +7,8 @@ export const dynamic = 'force-dynamic'
 interface Product {
   id: number
   name: string
-  category: string
   image: string
-  description: string
-  features: string[]
-  colors: string[]
   sizes: string[]
-  specifications: Record<string, string>
 }
 
 export async function GET(_req: Request, context: { params: Promise<{ id: string }> }) {
@@ -44,13 +39,10 @@ export async function PUT(request: Request, context: { params: Promise<{ id: str
 
     const current = products[index]
     const updated: Product = {
-      ...current,
-      ...updates,
       id: current.id,
-      features: Array.isArray(updates.features) ? updates.features.filter((v: string) => v?.trim()) : current.features,
-      colors: Array.isArray(updates.colors) ? updates.colors.filter((v: string) => v?.trim()) : current.colors,
+      name: String(updates.name ?? current.name),
+      image: String(updates.image ?? current.image),
       sizes: Array.isArray(updates.sizes) ? updates.sizes.filter((v: string) => v?.trim()) : current.sizes,
-      specifications: typeof updates.specifications === 'object' && updates.specifications !== null ? updates.specifications : current.specifications,
     }
 
     products[index] = updated

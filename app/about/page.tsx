@@ -5,6 +5,7 @@ import Image from "next/image"
 import { ArrowLeft, Award, Users, Globe, Target, Heart, Zap } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog"
 import { CountUp } from "@/components/count-up"
 
 const values = [
@@ -65,9 +66,11 @@ export default function AboutPage() {
                 İletişim
               </Link>
             </nav>
-            <Button className="bg-black hover:bg-gray-800 text-white">
-              Katalog İndir
-            </Button>
+            <a href="https://wa.me/905555555555" target="_blank" rel="noopener noreferrer">
+              <Button>
+                Whatsapp İletişim
+              </Button>
+            </a>
           </div>
         </div>
       </header>
@@ -83,8 +86,8 @@ export default function AboutPage() {
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8">
+        <div className="grid lg:grid-cols-12 gap-16 items-center">
+          <div className="space-y-8 lg:col-span-5">
             <div className="space-y-6">
               <h1 className="text-4xl lg:text-5xl font-bold text-black leading-tight">
                 Gelenekten Geleceğe
@@ -128,16 +131,36 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-          <div className="relative">
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100">
-              <Image
-                src="/kilim-weavers.png"
-                alt="Sarda Tekstil Üretim"
-                width={600}
-                height={500}
-                className="w-full h-full object-cover"
-              />
-            </div>
+          <div className="relative lg:col-span-7">
+            <Dialog>
+              <DialogTrigger asChild>
+                <button aria-label="Videoyu büyüt" className="group block w-full">
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-black shadow-lg ring-1 ring-black/5">
+                    <video
+                      src="/tv8_5.mp4"
+                      autoPlay
+                      muted
+                      loop
+                      controls
+                      playsInline
+                      className="w-full h-full object-cover object-left group-hover:opacity-95 transition-opacity"
+                      poster="/placeholder-yaa84.png"
+                    />
+                  </div>
+                </button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl p-0 bg-black">
+                <DialogTitle className="sr-only">Video Önizleme</DialogTitle>
+                <video
+                  src="/tv8_5.mp4"
+                  autoPlay
+                  muted
+                  controls
+                  className="w-full h-full"
+                  poster="/placeholder-yaa84.png"
+                />
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </section>
@@ -156,7 +179,7 @@ export default function AboutPage() {
             {values.map((value, index) => (
               <Card key={index} className="text-center border-0 shadow-sm hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-8 space-y-4">
-                  <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto">
+                  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto">
                     <value.icon className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-black">{value.title}</h3>
@@ -212,7 +235,7 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-16">
             <Card className="border-0 shadow-lg">
               <CardContent className="p-12 text-center space-y-6">
-                <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto">
+                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto">
                   <Target className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-black">Misyonumuz</h3>
@@ -227,7 +250,7 @@ export default function AboutPage() {
             
             <Card className="border-0 shadow-lg">
               <CardContent className="p-12 text-center space-y-6">
-                <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto">
+                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto">
                   <Globe className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-black">Vizyonumuz</h3>
@@ -255,12 +278,12 @@ export default function AboutPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact">
-                <Button size="lg" className="bg-black hover:bg-gray-800 text-white px-8">
+                <Button size="lg" className="px-8">
                   İletişime Geç
                 </Button>
               </Link>
               <Link href="/products">
-                <Button size="lg" variant="outline" className="border-black text-black hover:bg-black hover:text-white px-8">
+                <Button size="lg" variant="outline" className="px-8">
                   Ürünleri İncele
                 </Button>
               </Link>
@@ -273,7 +296,7 @@ export default function AboutPage() {
       <section className="container mx-auto px-4 pb-12">
         <div className="text-center">
           <Link href="/">
-            <Button variant="outline" className="border-black text-black hover:bg-black hover:text-white">
+            <Button variant="outline">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Ana Sayfaya Dön
             </Button>

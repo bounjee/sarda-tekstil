@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { CountUp } from "@/components/count-up"
 
-type HomeProduct = { id: number; name: string; category: string; image: string; description: string }
+ type HomeProduct = { id: number; name: string; image: string; description: string }
 import { useEffect, useState } from 'react'
 const productsInitial: HomeProduct[] = []
 
@@ -81,9 +81,11 @@ export default function HomePage() {
                 İletişim
               </Link>
             </nav>
-            <Button className="bg-black hover:bg-gray-800 text-white">
-              Katalog İndir
-            </Button>
+            <a href="https://wa.me/905555555555" target="_blank" rel="noopener noreferrer">
+              <Button>
+                Whatsapp İletişim
+              </Button>
+            </a>
           </div>
         </div>
       </header>
@@ -92,16 +94,17 @@ export default function HomePage() {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Image Background */}
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/placeholder-yaa84.png"
-            alt="Hero Background"
-            fill
-            className="object-cover"
-            priority
+          <video
+            src="/hero_video.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+            poster="/placeholder-yaa84.png"
           />
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/40"></div>
-        </div>
+<div className="absolute inset-0 bg-gradient-to-b from-[#000000B3] via-[#00000099] to-[#000000B3]"></div>
+</div>
         
         {/* Content */}
         <div className="relative z-10 text-center text-white space-y-8 max-w-4xl mx-auto px-4">
@@ -117,13 +120,13 @@ export default function HomePage() {
           </div>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in-up">
             <Link href="/products" onClick={() => window.scrollTo(0, 0)}>
-              <Button size="lg" className="bg-white text-black hover:bg-gray-100 group px-8 py-4 text-lg">
+              <Button size="lg" className="group px-8 py-4 text-lg">
                 Ürünleri Keşfet
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
             <Link href="/contact" onClick={() => window.scrollTo(0, 0)}>
-              <Button size="lg" className="bg-white text-black hover:bg-gray-100 px-8 py-4 text-lg">
+              <Button size="lg" className="px-8 py-4 text-lg">
                 İletişime Geç
               </Button>
             </Link>
@@ -138,7 +141,7 @@ export default function HomePage() {
             <div className="grid md:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
                 <div key={index} className="text-center space-y-3 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mx-auto">
+                   <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto">
                     <stat.icon className="h-6 w-6 text-white" />
                   </div>
                   <CountUp 
@@ -182,7 +185,6 @@ export default function HomePage() {
                   </div>
                   <CardContent className="p-6 space-y-4">
                     <div className="space-y-2">
-                      <div className="text-sm text-gray-500 uppercase tracking-wide">{product.category}</div>
                       <h3 className="text-xl font-semibold text-black group-hover:text-gray-700 transition-colors">
                         {product.name}
                       </h3>
@@ -191,7 +193,7 @@ export default function HomePage() {
                     <div className="w-full pt-2">
                       <Button 
                         size="sm" 
-                        className="bg-black hover:bg-gray-800 text-white w-full"
+                        className="w-full"
                         onClick={(e) => {
                           e.stopPropagation();
                           window.location.href = `/product/${product.id}`;

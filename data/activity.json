@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "id": 1754764990093,
+    "type": "product_added",
+    "message": "Yeni ürün eklendi: Kırmızı Bukleli Kilim",
+    "createdAt": 1754764990093
+  },
+  {
+    "id": 1754763272092,
+    "type": "product_updated",
+    "message": "Ürün güncellendi: Mavi Bukleli",
+    "createdAt": 1754763272092
+  },
+  {
+    "id": 1754763250876,
+    "type": "product_added",
+    "message": "Yeni ürün eklendi: Mavi Bukleli",
+    "createdAt": 1754763250876
+  },
+  {
+    "id": 1754762482059,
+    "type": "product_updated",
+    "message": "Ürün güncellendi: Bukleli Kilim",
+    "createdAt": 1754762482059
+  }
+]

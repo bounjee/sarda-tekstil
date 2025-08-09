@@ -94,7 +94,7 @@ export default function AdminSettings() {
               <span className="text-gray-400">|</span>
               <span className="text-lg font-medium text-gray-700">Site Ayarları</span>
             </div>
-            <Button onClick={handleSave} className="bg-black hover:bg-gray-800 text-white">
+            <Button onClick={handleSave}>
               <Save className="mr-2 h-4 w-4" />
               Kaydet
             </Button>
@@ -334,7 +334,7 @@ export default function AdminSettings() {
 
           {/* Save Button */}
           <div className="flex justify-end mt-8">
-            <Button onClick={handleSave} size="lg" className="bg-black hover:bg-gray-800 text-white">
+            <Button onClick={handleSave} size="lg">
               <Save className="mr-2 h-4 w-4" />
               Tüm Ayarları Kaydet
             </Button>

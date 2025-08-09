@@ -2,21 +2,30 @@
   {
     "id": 1754609352658,
     "name": "Bukleli Kilim",
-    "category": "Kilim",
     "image": "/uploads/1754609329947-32a6c276-702d-4e80-8283-27ad56957a61.jpeg",
-    "description": "Yeni Bukle Kilim",
-    "features": [
-      "Elyaf"
-    ],
-    "colors": [
-      "Beyaz"
-    ],
     "sizes": [
+      "165X250",
+      "165X250",
+      "165X250",
+      "165X250",
+      "165X250",
+      "165X250",
+      "165X250",
+      "165X250",
+      "165X250",
       "165X250"
-    ],
-    "specifications": {
-      "Malzeme": "100% Yün",
-      "Köken": "Gaziantep, Türkiye"
-    }
+    ]
+  },
+  {
+    "id": 1754763250793,
+    "name": "Mavi Bukleli",
+    "image": "/uploads/1754763270255-9b1e3dcf-11a8-4647-9e1f-cf48e5e29c13.jpeg",
+    "sizes": []
+  },
+  {
+    "id": 1754764990032,
+    "name": "Kırmızı Bukleli Kilim",
+    "image": "/uploads/1754764987803-resim1.jpeg",
+    "sizes": []
   }
 ]
