@@ -50,6 +50,15 @@ export const metadata: Metadata = {
     description: 'Gaziantep\'in köklü tekstil geleneğini modern tasarım anlayışıyla buluşturarak, kilim ve bukle üretiminde öncü olmaya devam ediyoruz.',
     images: ['/og-image.jpg'],
   },
+  icons: {
+    icon: [
+      { url: '/logo.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', type: 'image/x-icon' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+  },
   verification: {
     google: 'your-google-verification-code',
   },

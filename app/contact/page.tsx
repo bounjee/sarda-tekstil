@@ -5,6 +5,7 @@ import Image from "next/image"
 import { ArrowLeft, MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { buildWhatsAppLink } from '@/lib/constants'
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
@@ -80,9 +81,7 @@ export default function ContactPage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-black rounded-sm flex items-center justify-center">
-                <span className="text-white font-bold text-sm">S</span>
-              </div>
+              <Image src="/logo.svg" alt="Sarda Tekstil" width={32} height={32} className="h-8 w-8" />
               <span className="text-xl font-bold text-black">Sarda Tekstil</span>
             </Link>
             <nav className="hidden md:flex items-center justify-center space-x-8 flex-1">
@@ -99,7 +98,7 @@ export default function ContactPage() {
                 İletişim
               </Link>
             </nav>
-            <a href="https://wa.me/905555555555" target="_blank" rel="noopener noreferrer">
+            <a href={buildWhatsAppLink()} target="_blank" rel="noopener noreferrer">
               <Button>
                 Whatsapp İletişim
               </Button>

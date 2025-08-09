@@ -20,4 +20,12 @@ export const STANDARD_SIZES: string[] = [
   '200x300',
 ]
 
+export const WHATSAPP_NUMBER = '905555555555'
+
+export function buildWhatsAppLink(message?: string): string {
+  const base = `https://wa.me/${WHATSAPP_NUMBER}`
+  if (!message) return base
+  return `${base}?text=${encodeURIComponent(message)}`
+}
+
 
