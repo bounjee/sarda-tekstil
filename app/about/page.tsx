@@ -6,6 +6,7 @@ import { ArrowLeft, Award, Users, Globe, Target, Heart, Zap } from 'lucide-react
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { buildWhatsAppLink } from '@/lib/constants'
+import { SiteFooter } from "@/components/SiteFooter"
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog"
 import { CountUp } from "@/components/count-up"
 
@@ -303,55 +304,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-black text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-white rounded-sm flex items-center justify-center">
-                  <span className="text-black font-bold text-sm">S</span>
-                </div>
-                <span className="text-xl font-bold">Sarda Tekstil</span>
-              </div>
-              <p className="text-gray-400">
-                Geleneksel sanatın modern yorumu ile kaliteli tekstil ürünleri üretiyoruz.
-              </p>
-            </div>
-            
-            <div className="space-y-4">
-              <h4 className="font-semibold">Ürünler</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/products" className="hover:text-white transition-colors">Kilim Koleksiyonu</Link></li>
-                <li><Link href="/products" className="hover:text-white transition-colors">Bukle Serisi</Link></li>
-                <li><Link href="/products" className="hover:text-white transition-colors">Özel Tasarım</Link></li>
-              </ul>
-            </div>
-            
-            <div className="space-y-4">
-              <h4 className="font-semibold">Kurumsal</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/about" className="hover:text-white transition-colors" onClick={() => window.scrollTo(0, 0)}>Hakkımızda</Link></li>
-                <li><Link href="/quality-policy" className="hover:text-white transition-colors" onClick={() => window.scrollTo(0, 0)}>Kalite Politikası</Link></li>
-                <li><Link href="/sustainability" className="hover:text-white transition-colors" onClick={() => window.scrollTo(0, 0)}>Sürdürülebilirlik</Link></li>
-              </ul>
-            </div>
-            
-            <div className="space-y-4">
-              <h4 className="font-semibold">İletişim</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>Gaziantep, Türkiye</li>
-                <li>+90 342 123 45 67</li>
-                <li>info@sardatekstil.com</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Sarda Tekstil. Tüm hakları saklıdır.</p>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }

@@ -15,11 +15,26 @@ interface Settings {
     instagram: string
     linkedin: string
     twitter: string
+    youtube?: string
+    tiktok?: string
   }
   seo: {
     metaTitle: string
     metaDescription: string
     keywords: string
+  }
+  footer: {
+    year: number
+    company: string
+    address: string
+    phone: string
+    email: string
+    productsTitle: string
+    corporateTitle: string
+    contactTitle: string
+    productsLinksTexts: string[]
+    corporateLinksTexts: string[]
+    copyrightText?: string
   }
   features: {
     showPrices: boolean
@@ -46,6 +61,19 @@ const defaultSettings: Settings = {
     metaDescription: "Gaziantep'te 25 yıldır kaliteli kilim ve bukle üretimi yapan Sarda Tekstil. Geleneksel sanatın modern yorumu.",
     keywords: 'kilim, bukle, tekstil, Gaziantep, el dokuma'
   },
+  footer: {
+    year: new Date().getFullYear(),
+    company: 'Sarda Tekstil',
+    address: 'Gaziantep, Türkiye',
+    phone: '+90 342 123 45 67',
+    email: 'info@sardatekstil.com',
+    productsTitle: 'Ürünler',
+    corporateTitle: 'Kurumsal',
+    contactTitle: 'İletişim',
+    productsLinksTexts: ['Kilim Koleksiyonu','Bukle Serisi','Özel Tasarım'],
+    corporateLinksTexts: ['Hakkımızda','Kalite Politikası','Sürdürülebilirlik'],
+    copyrightText: 'Tüm hakları saklıdır.'
+  },
   features: {
     showPrices: false,
     enableCatalogDownload: true,
@@ -67,7 +95,14 @@ export async function PUT(request: Request) {
   try {
     const incoming = await request.json()
     const current = await readJsonFile<Settings>(settingsFileName, defaultSettings)
-    const merged: Settings = { ...current, ...incoming }
+    const merged: Settings = { 
+      ...current, 
+      ...incoming,
+      seo: { ...current.seo, ...incoming.seo },
+      socialMedia: { ...current.socialMedia, ...incoming.socialMedia },
+      features: { ...current.features, ...incoming.features },
+      footer: { ...current.footer, ...incoming.footer },
+    }
     await writeJsonFile(settingsFileName, merged)
     const activities = await readJsonFile<any[]>(activityFileName, [])
     activities.unshift({ id: Date.now(), type: 'settings_updated', message: 'Site ayarları güncellendi', createdAt: Date.now() })

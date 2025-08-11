@@ -21,18 +21,27 @@ export default function AdminSettings() {
       facebook: '',
       instagram: '',
       linkedin: '',
-      twitter: ''
+      twitter: '',
+      youtube: '',
+      tiktok: ''
     },
     seo: {
       metaTitle: 'Sarda Tekstil - Kilim ve Bukle Üretimi',
       metaDescription: 'Gaziantep\'te 25 yıldır kaliteli kilim ve bukle üretimi yapan Sarda Tekstil. Geleneksel sanatın modern yorumu.',
       keywords: 'kilim, bukle, tekstil, Gaziantep, el dokuma'
     },
-    features: {
-      showPrices: false,
-      enableCatalogDownload: true,
-      showContactForm: true,
-      enableNewsletter: false
+    footer: {
+      year: new Date().getFullYear(),
+      company: 'Sarda Tekstil',
+      address: 'Gaziantep, Türkiye',
+      phone: '+90 342 123 45 67',
+      email: 'info@sardatekstil.com',
+      productsTitle: 'Ürünler',
+      corporateTitle: 'Kurumsal',
+      contactTitle: 'İletişim',
+      productsLinksTexts: ['Kilim Koleksiyonu','Bukle Serisi','Özel Tasarım'],
+      corporateLinksTexts: ['Hakkımızda','Kalite Politikası','Sürdürülebilirlik'],
+      copyrightText: 'Tüm hakları saklıdır.'
     }
   })
   const [loading, setLoading] = useState(true)
@@ -277,55 +286,97 @@ export default function AdminSettings() {
               </CardContent>
             </Card>
 
-            {/* Özellik Ayarları */}
+            {/* Footer Ayarları */}
             <Card className="border-0 shadow-sm">
               <CardHeader>
-                <CardTitle>Özellik Ayarları</CardTitle>
+                <CardTitle>Footer Ayarları</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <Label>Fiyat Gösterimi</Label>
-                      <p className="text-sm text-gray-600">Ürün kartlarında fiyat bilgisi gösterilsin mi?</p>
-                    </div>
-                    <Switch
-                      checked={settings.features.showPrices}
-                      onCheckedChange={(checked) => updateSetting('features.showPrices', checked)}
-                    />
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="footerCompany">Şirket Adı</Label>
+                    <Input id="footerCompany" value={settings.footer.company} onChange={(e) => updateSetting('footer.company', e.target.value)} />
                   </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <Label>Katalog İndirme</Label>
-                      <p className="text-sm text-gray-600">Katalog indirme butonu aktif olsun mu?</p>
-                    </div>
-                    <Switch
-                      checked={settings.features.enableCatalogDownload}
-                      onCheckedChange={(checked) => updateSetting('features.enableCatalogDownload', checked)}
-                    />
+                  <div className="space-y-2">
+                    <Label htmlFor="footerYear">Yıl</Label>
+                    <Input id="footerYear" type="number" value={settings.footer.year} onChange={(e) => updateSetting('footer.year', Number(e.target.value))} />
                   </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <Label>İletişim Formu</Label>
-                      <p className="text-sm text-gray-600">İletişim sayfasında form gösterilsin mi?</p>
-                    </div>
-                    <Switch
-                      checked={settings.features.showContactForm}
-                      onCheckedChange={(checked) => updateSetting('features.showContactForm', checked)}
-                    />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="footerAddress">Adres</Label>
+                  <Textarea id="footerAddress" rows={2} value={settings.footer.address} onChange={(e) => updateSetting('footer.address', e.target.value)} />
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="footerPhone">Telefon</Label>
+                    <Input id="footerPhone" value={settings.footer.phone} onChange={(e) => updateSetting('footer.phone', e.target.value)} />
                   </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <Label>Haber Bülteni</Label>
-                      <p className="text-sm text-gray-600">Haber bülteni kayıt formu aktif olsun mu?</p>
-                    </div>
-                    <Switch
-                      checked={settings.features.enableNewsletter}
-                      onCheckedChange={(checked) => updateSetting('features.enableNewsletter', checked)}
-                    />
+                  <div className="space-y-2">
+                    <Label htmlFor="footerEmail">E-posta</Label>
+                    <Input id="footerEmail" value={settings.footer.email} onChange={(e) => updateSetting('footer.email', e.target.value)} />
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="productsTitle">Ürünler Başlığı</Label>
+                    <Input id="productsTitle" value={settings.footer.productsTitle} onChange={(e) => updateSetting('footer.productsTitle', e.target.value)} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="corporateTitle">Kurumsal Başlığı</Label>
+                    <Input id="corporateTitle" value={settings.footer.corporateTitle} onChange={(e) => updateSetting('footer.corporateTitle', e.target.value)} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="contactTitle">İletişim Başlığı</Label>
+                    <Input id="contactTitle" value={settings.footer.contactTitle} onChange={(e) => updateSetting('footer.contactTitle', e.target.value)} />
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label>Ürünler Link Metinleri (3 satır)</Label>
+                    <Textarea rows={3} value={settings.footer.productsLinksTexts.join('\n')} onChange={(e) => updateSetting('footer.productsLinksTexts', e.target.value.split('\n'))} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Kurumsal Link Metinleri (3 satır)</Label>
+                    <Textarea rows={3} value={settings.footer.corporateLinksTexts.join('\n')} onChange={(e) => updateSetting('footer.corporateLinksTexts', e.target.value.split('\n'))} />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="copyright">Copyright Metni</Label>
+                  <Input id="copyright" value={settings.footer.copyrightText || ''} onChange={(e) => updateSetting('footer.copyrightText', e.target.value)} />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Sosyal Medya Hesapları */}
+            <Card className="border-0 shadow-sm">
+              <CardHeader>
+                <CardTitle>Sosyal Medya Hesapları</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="facebook">Facebook</Label>
+                    <Input id="facebook" value={settings.socialMedia.facebook} onChange={(e) => updateSetting('socialMedia.facebook', e.target.value)} placeholder="https://facebook.com/sardatekstil" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="instagram">Instagram</Label>
+                    <Input id="instagram" value={settings.socialMedia.instagram} onChange={(e) => updateSetting('socialMedia.instagram', e.target.value)} placeholder="https://instagram.com/sardatekstil" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="linkedin">LinkedIn</Label>
+                    <Input id="linkedin" value={settings.socialMedia.linkedin} onChange={(e) => updateSetting('socialMedia.linkedin', e.target.value)} placeholder="https://linkedin.com/company/sardatekstil" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="twitter">X/Twitter</Label>
+                    <Input id="twitter" value={settings.socialMedia.twitter} onChange={(e) => updateSetting('socialMedia.twitter', e.target.value)} placeholder="https://twitter.com/sardatekstil" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="youtube">YouTube</Label>
+                    <Input id="youtube" value={settings.socialMedia.youtube} onChange={(e) => updateSetting('socialMedia.youtube', e.target.value)} placeholder="https://youtube.com/@sardatekstil" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="tiktok">TikTok</Label>
+                    <Input id="tiktok" value={settings.socialMedia.tiktok} onChange={(e) => updateSetting('socialMedia.tiktok', e.target.value)} placeholder="https://tiktok.com/@sardatekstil" />
                   </div>
                 </div>
               </CardContent>

@@ -4,6 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeft, MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
 import { Button } from "@/components/ui/button"
+import { SiteFooter } from "@/components/SiteFooter"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { buildWhatsAppLink } from '@/lib/constants'
 import { Input } from "@/components/ui/input"
@@ -275,7 +276,7 @@ export default function ContactPage() {
           <div className="aspect-[4/3] rounded-lg overflow-hidden">
             <iframe
               title="Sarda Tekstil Konum"
-              src="https://www.google.com/maps?q=Gaziantep%2C%20Turkey&hl=tr&z=13&output=embed"
+              src="https://www.google.com/maps?q=%C3%9Cnald%C4%B1%2C%20M%C4%B1hc%C4%B1%20Zekeriya%20Sk.%20No%3A31%2C%2027100%2C%2027000%20%C5%9Eahinbey%2FGaziantep&hl=tr&z=16&output=embed"
               className="w-full h-full border-0"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -336,55 +337,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-black text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-white rounded-sm flex items-center justify-center">
-                  <span className="text-black font-bold text-sm">S</span>
-                </div>
-                <span className="text-xl font-bold">Sarda Tekstil</span>
-              </div>
-              <p className="text-gray-400">
-                Geleneksel sanatın modern yorumu ile kaliteli tekstil ürünleri üretiyoruz.
-              </p>
-            </div>
-            
-            <div className="space-y-4">
-              <h4 className="font-semibold">Ürünler</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/products" className="hover:text-white transition-colors">Kilim Koleksiyonu</Link></li>
-                <li><Link href="/products" className="hover:text-white transition-colors">Bukle Serisi</Link></li>
-                <li><Link href="/products" className="hover:text-white transition-colors">Özel Tasarım</Link></li>
-              </ul>
-            </div>
-            
-            <div className="space-y-4">
-              <h4 className="font-semibold">Kurumsal</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/about" className="hover:text-white transition-colors">Hakkımızda</Link></li>
-                <li><Link href="/quality-policy" className="hover:text-white transition-colors">Kalite Politikası</Link></li>
-                <li><Link href="/sustainability" className="hover:text-white transition-colors">Sürdürülebilirlik</Link></li>
-              </ul>
-            </div>
-            
-            <div className="space-y-4">
-              <h4 className="font-semibold">İletişim</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>Gaziantep, Türkiye</li>
-                <li>+90 342 123 45 67</li>
-                <li>info@sardatekstil.com</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Sarda Tekstil. Tüm hakları saklıdır.</p>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }

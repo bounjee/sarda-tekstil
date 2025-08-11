@@ -1,5 +1,53 @@
 [
   {
+    "id": 1754873012071,
+    "type": "settings_updated",
+    "message": "Site ayarları güncellendi",
+    "createdAt": 1754873012071
+  },
+  {
+    "id": 1754873005488,
+    "type": "settings_updated",
+    "message": "Site ayarları güncellendi",
+    "createdAt": 1754873005488
+  },
+  {
+    "id": 1754872991103,
+    "type": "settings_updated",
+    "message": "Site ayarları güncellendi",
+    "createdAt": 1754872991103
+  },
+  {
+    "id": 1754872553260,
+    "type": "settings_updated",
+    "message": "Site ayarları güncellendi",
+    "createdAt": 1754872553260
+  },
+  {
+    "id": 1754872547763,
+    "type": "settings_updated",
+    "message": "Site ayarları güncellendi",
+    "createdAt": 1754872547763
+  },
+  {
+    "id": 1754872535382,
+    "type": "settings_updated",
+    "message": "Site ayarları güncellendi",
+    "createdAt": 1754872535382
+  },
+  {
+    "id": 1754872520276,
+    "type": "settings_updated",
+    "message": "Site ayarları güncellendi",
+    "createdAt": 1754872520276
+  },
+  {
+    "id": 1754872508313,
+    "type": "settings_updated",
+    "message": "Site ayarları güncellendi",
+    "createdAt": 1754872508313
+  },
+  {
     "id": 1754764990093,
     "type": "product_added",
     "message": "Yeni ürün eklendi: Kırmızı Bukleli Kilim",

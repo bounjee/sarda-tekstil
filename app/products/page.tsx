@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Search, Filter, Grid, List, ArrowLeft } from 'lucide-react'
 import { buildWhatsAppLink } from '@/lib/constants'
 import { Button } from "@/components/ui/button"
@@ -9,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { ImageWithFallback } from "@/components/image-with-fallback"
+import { SiteFooter } from "@/components/SiteFooter"
 import { LoadingCard, LoadingSpinner } from "@/components/loading-spinner"
 import { ErrorBoundary } from "@/components/error-boundary"
 
@@ -204,21 +206,22 @@ function ProductsContent() {
             : "space-y-6"
           }>
             {filteredProducts.map((product) => (
-              <Card key={product.id} className={`group border-0 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col ${
+              <Card key={product.id} className={`group relative border-0 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col ${
                 viewMode === 'list' ? 'flex-row' : ''
               }`}>
-                <div className={`relative overflow-hidden ${
-                  viewMode === 'list' ? 'w-64 flex-shrink-0' : 'aspect-[4/3]'
-                }`}>
-                  <ImageWithFallback
+                <Link href={`/product/${product.id}`} className="absolute inset-0 z-10" aria-label={`Detay: ${product.name}`}></Link>
+                  <Link href={`/product/${product.id}`} className={`relative overflow-hidden block ${
+                   viewMode === 'list' ? 'w-64 flex-shrink-0' : 'aspect-[4/3]'
+                 }`}>
+                  <Image
                     src={product.image || "/placeholder.svg"}
                     alt={product.name}
                     width={400}
                     height={300}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-contain bg-white"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                </div>
+                </Link>
                 
                 <div className={`p-6 space-y-4 flex-1 flex flex-col ${
                   viewMode === 'list' ? 'justify-center' : ''
@@ -234,7 +237,7 @@ function ProductsContent() {
                   
                   <div className="pt-4 mt-auto">
                     <Link href={`/product/${product.id}`}>
-                      <Button className="w-full transition-colors">
+                      <Button className="w-full transition-colors relative z-20">
                         Detaylar
                       </Button>
                     </Link>
@@ -258,55 +261,7 @@ function ProductsContent() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-black text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-white rounded-sm flex items-center justify-center">
-                  <span className="text-black font-bold text-sm">S</span>
-                </div>
-                <span className="text-xl font-bold">Sarda Tekstil</span>
-              </div>
-              <p className="text-gray-400">
-                Geleneksel sanatın modern yorumu ile kaliteli tekstil ürünleri üretiyoruz.
-              </p>
-            </div>
-            
-            <div className="space-y-4">
-              <h4 className="font-semibold">Ürünler</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/products" className="hover:text-white transition-colors">Kilim Koleksiyonu</Link></li>
-                <li><Link href="/products" className="hover:text-white transition-colors">Bukle Serisi</Link></li>
-                <li><Link href="/products" className="hover:text-white transition-colors">Özel Tasarım</Link></li>
-              </ul>
-            </div>
-            
-            <div className="space-y-4">
-              <h4 className="font-semibold">Kurumsal</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/about" className="hover:text-white transition-colors">Hakkımızda</Link></li>
-                <li><Link href="/quality-policy" className="hover:text-white transition-colors">Kalite Politikası</Link></li>
-                <li><Link href="/sustainability" className="hover:text-white transition-colors">Sürdürülebilirlik</Link></li>
-              </ul>
-            </div>
-            
-            <div className="space-y-4">
-              <h4 className="font-semibold">İletişim</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>Gaziantep, Türkiye</li>
-                <li>+90 342 123 45 67</li>
-                <li>info@sardatekstil.com</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Sarda Tekstil. Tüm hakları saklıdır.</p>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }
