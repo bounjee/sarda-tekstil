@@ -47,9 +47,9 @@ interface Settings {
 const defaultSettings: Settings = {
   siteName: 'Sarda Tekstil',
   siteDescription: 'Geleneksel sanatın modern yorumu ile kaliteli tekstil ürünleri üretiyoruz.',
-  contactEmail: 'info@sardatekstil.com',
-  contactPhone: '+90 342 123 45 67',
-  contactAddress: 'Gaziantep Organize Sanayi Bölgesi, 1. Cadde No: 25, 27000 Şehitkamil / Gaziantep',
+  contactEmail: '',
+  contactPhone: '+90 534 865 40 72',
+  contactAddress: 'Ünaldı, Mıhcı Zekeriya Sk. No:31, 27100 Şahinbey/Gaziantep',
   socialMedia: {
     facebook: '',
     instagram: '',
@@ -58,15 +58,15 @@ const defaultSettings: Settings = {
   },
   seo: {
     metaTitle: 'Sarda Tekstil - Kilim ve Bukle Üretimi',
-    metaDescription: "Gaziantep'te 25 yıldır kaliteli kilim ve bukle üretimi yapan Sarda Tekstil. Geleneksel sanatın modern yorumu.",
+    metaDescription: "Gaziantep'te kaliteli kilim ve bukle üretimi yapan Sarda Tekstil. Geleneksel sanatın modern yorumu.",
     keywords: 'kilim, bukle, tekstil, Gaziantep, el dokuma'
   },
   footer: {
     year: new Date().getFullYear(),
     company: 'Sarda Tekstil',
-    address: 'Gaziantep, Türkiye',
-    phone: '+90 342 123 45 67',
-    email: 'info@sardatekstil.com',
+    address: 'Ünaldı, Mıhcı Zekeriya Sk. No:31, 27100 Şahinbey/Gaziantep',
+    phone: '+90 534 865 40 72',
+    email: '',
     productsTitle: 'Ürünler',
     corporateTitle: 'Kurumsal',
     contactTitle: 'İletişim',

@@ -3,42 +3,14 @@
 import Link from "next/link"
 import Image from "next/image"
 import { SiteFooter } from "@/components/SiteFooter"
-import { ArrowRight, Award, Globe, Users, TrendingUp } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { buildWhatsAppLink } from '@/lib/constants'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { CountUp } from "@/components/count-up"
 
  type HomeProduct = { id: number; name: string; image: string; description: string }
 import { useEffect, useState } from 'react'
 const productsInitial: HomeProduct[] = []
-
-const stats = [
-  { 
-    icon: Award, 
-    label: "Yıllık Deneyim", 
-    value: 25,
-    suffix: "+"
-  },
-  { 
-    icon: Globe, 
-    label: "İhracat Ülkesi", 
-    value: 15,
-    suffix: "+"
-  },
-  { 
-    icon: Users, 
-    label: "Mutlu Müşteri", 
-    value: 1000,
-    suffix: "+"
-  },
-  { 
-    icon: TrendingUp, 
-    label: "Kalite Standardı", 
-    value: 100,
-    prefix: "%"
-  }
-]
 
 export default function HomePage() {
   const [latest, setLatest] = useState<HomeProduct[]>([])
@@ -101,7 +73,7 @@ export default function HomePage() {
             loop
             playsInline
             className="w-full h-full object-cover"
-            poster="/placeholder-yaa84.png"
+            poster="/hero-poster.jpg"
           />
 <div className="absolute inset-0 bg-gradient-to-b from-[#000000B3] via-[#00000099] to-[#000000B3]"></div>
 </div>
@@ -115,7 +87,7 @@ export default function HomePage() {
             </h1>
             <p className="text-xl lg:text-2xl text-gray-200 max-w-2xl mx-auto">
               Gaziantep'in köklü tekstil geleneğini modern tasarım anlayışıyla buluşturarak, 
-              kilim ve bukle üretiminde öncü olmaya devam ediyoruz.
+              kilim ve bukle üretiyoruz.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in-up">
@@ -130,31 +102,6 @@ export default function HomePage() {
                 İletişime Geç
               </Button>
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section - With Counter Animation */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-4 gap-8">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center space-y-3 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
-                   <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto">
-                    <stat.icon className="h-6 w-6 text-white" />
-                  </div>
-                  <CountUp 
-                    end={stat.value} 
-                    duration={2500}
-                    prefix={stat.prefix || ''}
-                    suffix={stat.suffix || ''}
-                    className="text-3xl font-bold text-black"
-                  />
-                  <div className="text-sm text-gray-600">{stat.label}</div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>

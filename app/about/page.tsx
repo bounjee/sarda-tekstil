@@ -8,7 +8,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import { buildWhatsAppLink } from '@/lib/constants'
 import { SiteFooter } from "@/components/SiteFooter"
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog"
-import { CountUp } from "@/components/count-up"
 
 const values = [
   {
@@ -31,14 +30,6 @@ const values = [
     title: "Global Vizyon",
     description: "Türk tekstil sanatını dünya çapında tanıtmak için çalışıyoruz."
   }
-]
-
-const milestones = [
-  { year: "1998", title: "Kuruluş", description: "Sarda Tekstil, Gaziantep'te kuruldu" },
-  { year: "2005", title: "İlk İhracat", description: "Avrupa pazarına ilk ihracatımızı gerçekleştirdik" },
-  { year: "2012", title: "Kapasite Artışı", description: "Üretim kapasitemizi 3 katına çıkardık" },
-  { year: "2018", title: "Teknoloji Yatırımı", description: "Modern dokuma makineleri ile donatıldık" },
-  { year: "2024", title: "Sürdürülebilirlik", description: "Çevre dostu üretim süreçlerine geçiş" }
 ]
 
 export default function AboutPage() {
@@ -94,41 +85,11 @@ export default function AboutPage() {
                 <span className="block text-gray-600">Sarda Tekstil</span>
               </h1>
               <p className="text-lg text-gray-600 leading-relaxed">
-                1998 yılından bu yana Gaziantep'te faaliyet gösteren Sarda Tekstil, 
-                geleneksel el sanatlarını modern üretim teknikleriyle harmanlayarak 
-                sektörde öncü konumunu sürdürmektedir. Kalite, güven ve müşteri 
-                memnuniyeti odaklı yaklaşımımızla 25 yılı aşkın deneyimimizi 
-                sizlerin hizmetine sunuyoruz.
+                Gaziantep'te faaliyet gösteren Sarda Tekstil, geleneksel el 
+                sanatlarını modern üretim teknikleriyle harmanlayarak kilim ve 
+                bukle üretimi yapmaktadır. Kalite, güven ve müşteri memnuniyeti 
+                odaklı yaklaşımımızla deneyimimizi sizlerin hizmetine sunuyoruz.
               </p>
-            </div>
-            <div className="grid grid-cols-3 gap-6">
-              <div className="text-center">
-                <CountUp 
-                  end={25} 
-                  duration={2000}
-                  suffix="+"
-                  className="text-3xl font-bold text-black"
-                />
-                <div className="text-gray-600">Yıllık Deneyim</div>
-              </div>
-              <div className="text-center">
-                <CountUp 
-                  end={15} 
-                  duration={2000}
-                  suffix="+"
-                  className="text-3xl font-bold text-black"
-                />
-                <div className="text-gray-600">İhracat Ülkesi</div>
-              </div>
-              <div className="text-center">
-                <CountUp 
-                  end={1000} 
-                  duration={2500}
-                  suffix="+"
-                  className="text-3xl font-bold text-black"
-                />
-                <div className="text-gray-600">Mutlu Müşteri</div>
-              </div>
             </div>
           </div>
           <div className="relative lg:col-span-7">
@@ -144,7 +105,8 @@ export default function AboutPage() {
                       controls
                       playsInline
                       className="w-full h-full object-cover object-left group-hover:opacity-95 transition-opacity"
-                      poster="/placeholder-yaa84.png"
+                      poster="/tv8_5-poster.jpg"
+                      preload="none"
                     />
                   </div>
                 </button>
@@ -153,11 +115,11 @@ export default function AboutPage() {
                 <DialogTitle className="sr-only">Video Önizleme</DialogTitle>
                 <video
                   src="/tv8_5.mp4"
-                  autoPlay
                   muted
                   controls
                   className="w-full h-full"
-                  poster="/placeholder-yaa84.png"
+                  poster="/tv8_5-poster.jpg"
+                  preload="none"
                 />
               </DialogContent>
             </Dialog>
@@ -191,44 +153,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Timeline Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center space-y-6 mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-black">Tarihçemiz</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              25 yılı aşkın sürede attığımız önemli adımlar
-            </p>
-          </div>
-          
-          <div className="max-w-4xl mx-auto">
-            <div className="relative">
-              {/* Timeline line */}
-              <div className="absolute left-1/2 transform -translate-x-px h-full w-0.5 bg-gray-200"></div>
-              
-              {milestones.map((milestone, index) => (
-                <div key={index} className={`relative flex items-center ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-12`}>
-                  <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
-                    <Card className="border-0 shadow-sm hover:shadow-lg transition-shadow duration-300">
-                      <CardContent className="p-6">
-                        <div className="space-y-2">
-                          <div className="text-2xl font-bold text-black">{milestone.year}</div>
-                          <h3 className="text-lg font-semibold text-black">{milestone.title}</h3>
-                          <p className="text-gray-600">{milestone.description}</p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                  
-                  {/* Timeline dot */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-black rounded-full border-4 border-white shadow-lg"></div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Mission & Vision */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -257,8 +181,8 @@ export default function AboutPage() {
                 <p className="text-gray-600 leading-relaxed">
                   Türk tekstil sanatını dünya çapında tanınan bir marka haline getirmek. 
                   Sürdürülebilir üretim anlayışı ile çevre dostu yaklaşımımızı koruyarak, 
-                  global pazarda öncü konumumuzu güçlendirmek ve sektörde referans 
-                  olmaya devam etmek.
+                  global pazarda tanınırlığımızı artırmak ve sektörde referans 
+                  olmak.
                 </p>
               </CardContent>
             </Card>
@@ -274,7 +198,7 @@ export default function AboutPage() {
               Bizimle Çalışmaya Hazır mısınız?
             </h2>
             <p className="text-lg text-gray-600">
-              25 yıllık deneyimimiz ve kalite anlayışımızla projelerinizde yanınızdayız.
+              Deneyimimiz ve kalite anlayışımızla projelerinizde yanınızdayız.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact">

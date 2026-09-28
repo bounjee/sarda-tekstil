@@ -39,10 +39,13 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
             id: p.id,
             name: p.name,
             images: [p.image || '/placeholder.svg'],
-            sizes: Array.isArray(p.sizes) ? p.sizes : [],
+            sizes: Array.isArray(p.sizes)
+              ? Array.from(new Set<string>(p.sizes.map((s: unknown) => String(s).trim()).filter(Boolean)))
+              : [],
           }
           setProduct(transformed)
-          setSelectedSize(STANDARD_SIZES[0] || null)
+          const initialSizes = transformed.sizes.length > 0 ? transformed.sizes : STANDARD_SIZES
+          setSelectedSize(initialSizes[0] || null)
         } else {
           setProduct(null)
         }
@@ -82,7 +85,12 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
     )
   }
 
-  const whatsappHref = () => buildWhatsAppLink()
+  const sizeOptions = product.sizes.length > 0 ? product.sizes : STANDARD_SIZES
+  const whatsappHref = () =>
+    buildWhatsAppLink(
+      `Merhaba, "${product.name}" ürünü için fiyat teklifi almak istiyorum.` +
+        (selectedSize ? ` Boyut: ${selectedSize}` : '')
+    )
 
   return (
     <div className="min-h-screen bg-white">
@@ -174,7 +182,7 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
                 <div className="space-y-4">
                   <h3 className="text-xl font-semibold text-black text-center lg:text-left">Boyut Seçenekleri</h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {STANDARD_SIZES.map((size) => {
+                    {sizeOptions.map((size) => {
                       const isActive = selectedSize === size
                       return (
                         <button

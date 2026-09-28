@@ -15,6 +15,8 @@ interface FooterSettings {
   copyrightText?: string
 }
 
+const isUrl = (value?: string) => typeof value === 'string' && value.startsWith('http')
+
 export function SiteFooter() {
   const [footer, setFooter] = useState<FooterSettings | null>(null)
   const [social, setSocial] = useState<{ facebook?: string; instagram?: string; linkedin?: string; twitter?: string; youtube?: string; tiktok?: string } | null>(null)
@@ -49,12 +51,12 @@ export function SiteFooter() {
             </p>
             {/* Social Icons */}
             <div className="flex items-center gap-3 text-gray-400">
-              {social?.facebook && <Link href={social.facebook} target="_blank" className="hover:text-white">Facebook</Link>}
-              {social?.instagram && <Link href={social.instagram} target="_blank" className="hover:text-white">Instagram</Link>}
-              {social?.linkedin && <Link href={social.linkedin} target="_blank" className="hover:text-white">LinkedIn</Link>}
-              {social?.twitter && <Link href={social.twitter} target="_blank" className="hover:text-white">Twitter</Link>}
-              {social?.youtube && <Link href={social.youtube} target="_blank" className="hover:text-white">YouTube</Link>}
-              {social?.tiktok && <Link href={social.tiktok} target="_blank" className="hover:text-white">TikTok</Link>}
+              {isUrl(social?.facebook) && <Link href={social!.facebook!} target="_blank" className="hover:text-white">Facebook</Link>}
+              {isUrl(social?.instagram) && <Link href={social!.instagram!} target="_blank" className="hover:text-white">Instagram</Link>}
+              {isUrl(social?.linkedin) && <Link href={social!.linkedin!} target="_blank" className="hover:text-white">LinkedIn</Link>}
+              {isUrl(social?.twitter) && <Link href={social!.twitter!} target="_blank" className="hover:text-white">Twitter</Link>}
+              {isUrl(social?.youtube) && <Link href={social!.youtube!} target="_blank" className="hover:text-white">YouTube</Link>}
+              {isUrl(social?.tiktok) && <Link href={social!.tiktok!} target="_blank" className="hover:text-white">TikTok</Link>}
             </div>
           </div>
 
@@ -79,15 +81,16 @@ export function SiteFooter() {
           <div className="space-y-4">
             <h4 className="font-semibold">{footer?.contactTitle ?? 'İletişim'}</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>{footer?.address ?? 'Gaziantep, Türkiye'}</li>
-              <li>{footer?.phone ?? '+90 342 123 45 67'}</li>
-              <li>{footer?.email ?? 'info@sardatekstil.com'}</li>
+              <li>{footer?.address || 'Ünaldı, Mıhcı Zekeriya Sk. No:31, 27100 Şahinbey/Gaziantep'}</li>
+              <li>{footer?.phone || '0534 865 40 72'}</li>
+              {footer?.email && <li>{footer.email}</li>}
+              <li>24 saat açık</li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {footer?.year ?? new Date().getFullYear()} {footer?.company ?? 'Sarda Tekstil'}. {footer?.copyrightText ?? 'Tüm hakları saklıdır.'}</p>
+          <p>&copy; {new Date().getFullYear()} {footer?.company ?? 'Sarda Tekstil'}. {footer?.copyrightText ?? 'Tüm hakları saklıdır.'}</p>
         </div>
       </div>
     </footer>

@@ -4,7 +4,7 @@ import "./globals.css"
 import { ErrorBoundary } from "@/components/error-boundary"
 import { Toaster } from "@/components/ui/toaster"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin", "latin-ext"] })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://sardatekstil.com'),
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     default: "Sarda Tekstil - Geleneksel Sanatın Modern Yorumu",
     template: "%s | Sarda Tekstil"
   },
-  description: "Gaziantep'in köklü tekstil geleneğini modern tasarım anlayışıyla buluşturarak, kilim ve bukle üretiminde öncü olmaya devam ediyoruz.",
+  description: "Gaziantep'in köklü tekstil geleneğini modern tasarım anlayışıyla buluşturarak, kilim ve bukle üretiyoruz.",
   keywords: ["kilim", "bukle", "tekstil", "Gaziantep", "el dokuma", "geleneksel", "modern", "kaliteli kumaş"],
   authors: [{ name: "Sarda Tekstil" }],
   creator: "Sarda Tekstil",
@@ -34,35 +34,16 @@ export const metadata: Metadata = {
     url: 'https://sardatekstil.com',
     siteName: 'Sarda Tekstil',
     title: 'Sarda Tekstil - Geleneksel Sanatın Modern Yorumu',
-    description: 'Gaziantep\'in köklü tekstil geleneğini modern tasarım anlayışıyla buluşturarak, kilim ve bukle üretiminde öncü olmaya devam ediyoruz.',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Sarda Tekstil',
-      },
-    ],
+    description: 'Gaziantep\'in köklü tekstil geleneğini modern tasarım anlayışıyla buluşturarak, kilim ve bukle üretiyoruz.',
   },
   twitter: {
-    card: 'summary_large_image',
+    card: 'summary',
     title: 'Sarda Tekstil - Geleneksel Sanatın Modern Yorumu',
-    description: 'Gaziantep\'in köklü tekstil geleneğini modern tasarım anlayışıyla buluşturarak, kilim ve bukle üretiminde öncü olmaya devam ediyoruz.',
-    images: ['/og-image.jpg'],
+    description: 'Gaziantep\'in köklü tekstil geleneğini modern tasarım anlayışıyla buluşturarak, kilim ve bukle üretiyoruz.',
   },
   icons: {
-    icon: [
-      { url: '/logo.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico', type: 'image/x-icon' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-    ],
-    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+    icon: [{ url: '/logo.svg', type: 'image/svg+xml' }],
   },
-  verification: {
-    google: 'your-google-verification-code',
-  },
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({

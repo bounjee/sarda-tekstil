@@ -27,7 +27,7 @@ const sustainabilityPrinciples = [
   {
     icon: Sun,
     title: "Yenilenebilir Enerji",
-    description: "Güneş enerjisi ve diğer yenilenebilir enerji kaynaklarını kullanıyoruz."
+    description: "Yenilenebilir enerji kaynaklarının kullanımını önemsiyoruz."
   },
   {
     icon: Heart,
@@ -44,23 +44,19 @@ const sustainabilityPrinciples = [
 const initiatives = [
   {
     title: "Organik Hammadde Kullanımı",
-    description: "Üretimde organik ve doğal hammaddeleri tercih ediyoruz.",
-    impact: "%40 daha az kimyasal kullanım"
+    description: "Üretimde organik ve doğal hammaddeleri tercih ediyoruz."
   },
   {
     title: "Enerji Verimliliği",
-    description: "Modern teknoloji ile enerji tüketimini azaltıyoruz.",
-    impact: "%30 enerji tasarrufu"
+    description: "Modern teknoloji ile enerji tüketimini azaltıyoruz."
   },
   {
     title: "Atık Azaltma",
-    description: "Üretim sürecinde sıfır atık hedefine yönelik çalışıyoruz.",
-    impact: "%50 atık azaltımı"
+    description: "Üretim sürecinde sıfır atık hedefine yönelik çalışıyoruz."
   },
   {
     title: "Yerel Tedarik",
-    description: "Yerel tedarikçilerle çalışarak karbon ayak izini azaltıyoruz.",
-    impact: "%25 karbon azaltımı"
+    description: "Yerel tedarikçilerle çalışarak karbon ayak izini azaltıyoruz."
   }
 ]
 
@@ -161,9 +157,6 @@ export default function SustainabilityPage() {
                 <CardContent className="p-8 space-y-4">
                   <h3 className="text-xl font-semibold text-black">{initiative.title}</h3>
                   <p className="text-gray-600">{initiative.description}</p>
-                  <div className="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
-                    {initiative.impact}
-                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -185,78 +178,21 @@ export default function SustainabilityPage() {
                   controls
                   playsInline
                   className="w-full h-full object-cover object-left"
-                  poster="/placeholder-yaa84.png"
+                  poster="/tv8_5-poster.jpg"
+                  preload="none"
                 />
               </div>
             </div>
             
             <div className="space-y-8">
               <div className="space-y-6">
-                <h2 className="text-3xl lg:text-4xl font-bold text-black">Çevresel Etkimiz</h2>
+                <h2 className="text-3xl lg:text-4xl font-bold text-black">Çevreye Saygılı Üretim</h2>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  2024 yılında gerçekleştirdiğimiz sürdürülebilirlik projelerimizin 
-                  çevresel etki sonuçları.
+                  Üretim süreçlerimizde kaynakları verimli kullanmayı, atıkları azaltmayı 
+                  ve çevresel etkimizi en aza indirmeyi hedefliyoruz.
                 </p>
               </div>
               
-              <div className="grid grid-cols-2 gap-6">
-                <div className="text-center p-6 bg-white rounded-lg shadow-sm">
-                  <div className="text-3xl font-bold text-green-600 mb-2">2.5 Ton</div>
-                  <div className="text-sm text-gray-600">CO₂ Azaltımı</div>
-                </div>
-                <div className="text-center p-6 bg-white rounded-lg shadow-sm">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">15.000L</div>
-                  <div className="text-sm text-gray-600">Su Tasarrufu</div>
-                </div>
-                <div className="text-center p-6 bg-white rounded-lg shadow-sm">
-                  <div className="text-3xl font-bold text-orange-600 mb-2">%40</div>
-                  <div className="text-sm text-gray-600">Enerji Verimliliği</div>
-                </div>
-                <div className="text-center p-6 bg-white rounded-lg shadow-sm">
-                  <div className="text-3xl font-bold text-purple-600 mb-2">%60</div>
-                  <div className="text-sm text-gray-600">Geri Dönüşüm</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Future Goals */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center space-y-6 mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-black">2030 Hedeflerimiz</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Sürdürülebilir gelecek için belirlediğimiz uzun vadeli hedefler
-            </p>
-          </div>
-          
-          <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center space-y-4">
-                <div className="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-2xl font-bold text-white">0</span>
-                </div>
-                <h3 className="text-xl font-semibold text-black">Sıfır Atık</h3>
-                <p className="text-gray-600">2030 yılına kadar sıfır atık hedefine ulaşmak</p>
-              </div>
-              
-              <div className="text-center space-y-4">
-                <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-2xl font-bold text-white">100%</span>
-                </div>
-                <h3 className="text-xl font-semibold text-black">Yenilenebilir Enerji</h3>
-                <p className="text-gray-600">Tüm enerjimizi yenilenebilir kaynaklardan karşılamak</p>
-              </div>
-              
-              <div className="text-center space-y-4">
-                <div className="w-20 h-20 bg-orange-600 rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-2xl font-bold text-white">50%</span>
-                </div>
-                <h3 className="text-xl font-semibold text-black">Karbon Azaltımı</h3>
-                <p className="text-gray-600">Karbon ayak izimizi %50 oranında azaltmak</p>
-              </div>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
+import { ArrowLeft, MapPin, Phone, Clock, Send } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { SiteFooter } from "@/components/SiteFooter"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -17,36 +17,23 @@ const contactInfo = [
     icon: MapPin,
     title: "Adres",
     details: [
-      "Gaziantep Organize Sanayi Bölgesi",
-      "1. Cadde No: 25",
-      "27000 Şehitkamil / Gaziantep"
+      "Ünaldı, Mıhcı Zekeriya Sk. No:31",
+      "27100 Şahinbey / Gaziantep"
     ]
   },
   {
     icon: Phone,
     title: "Telefon",
     details: [
-      "+90 342 123 45 67",
-      "+90 342 123 45 68",
-      "Fax: +90 342 123 45 69"
-    ]
-  },
-  {
-    icon: Mail,
-    title: "E-posta",
-    details: [
-      "info@sardatekstil.com",
-      "satis@sardatekstil.com",
-      "export@sardatekstil.com"
+      "0534 865 40 72",
+      "WhatsApp: 0534 865 40 72"
     ]
   },
   {
     icon: Clock,
     title: "Çalışma Saatleri",
     details: [
-      "Pazartesi - Cuma: 08:00 - 18:00",
-      "Cumartesi: 08:00 - 16:00",
-      "Pazar: Kapalı"
+      "24 saat açık"
     ]
   }
 ]
@@ -54,7 +41,6 @@ const contactInfo = [
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
     phone: '',
     company: '',
     subject: '',
@@ -63,9 +49,13 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Form submission logic here
-    console.log('Form submitted:', formData)
-    alert('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.')
+    const header = [
+      `Ad Soyad: ${formData.name}`,
+      formData.phone ? `Telefon: ${formData.phone}` : '',
+      formData.company ? `Şirket: ${formData.company}` : '',
+      `Konu: ${formData.subject}`,
+    ].filter(Boolean).join('\n')
+    window.open(buildWhatsAppLink(`${header}\n\n${formData.message}`), '_blank', 'noopener,noreferrer')
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -131,7 +121,7 @@ export default function ContactPage() {
 
       {/* Contact Info Cards */}
       <section className="container mx-auto px-4 pb-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
           {contactInfo.map((info, index) => (
             <Card key={index} className="text-center border-0 shadow-sm hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-8 space-y-4">
@@ -159,7 +149,7 @@ export default function ContactPage() {
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-black">Mesaj Gönderin</CardTitle>
           <p className="text-gray-600">
-            Formu doldurarak bizimle iletişime geçebilirsiniz. En kısa sürede size dönüş yapacağız.
+            Formu doldurduğunuzda mesajınız WhatsApp üzerinden bize iletilmek üzere hazırlanır.
           </p>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -177,21 +167,6 @@ export default function ContactPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">E-posta *</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="border-gray-300 focus:border-black"
-                />
-              </div>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
                 <Label htmlFor="phone">Telefon</Label>
                 <Input
                   id="phone"
@@ -201,16 +176,17 @@ export default function ContactPage() {
                   className="border-gray-300 focus:border-black"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="company">Şirket</Label>
-                <Input
-                  id="company"
-                  name="company"
-                  value={formData.company}
-                  onChange={handleChange}
-                  className="border-gray-300 focus:border-black"
-                />
-              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="company">Şirket</Label>
+              <Input
+                id="company"
+                name="company"
+                value={formData.company}
+                onChange={handleChange}
+                className="border-gray-300 focus:border-black"
+              />
             </div>
             
             <div className="space-y-2">
@@ -240,7 +216,7 @@ export default function ContactPage() {
             
             <Button type="submit" size="lg" className="w-full">
               <Send className="mr-2 h-4 w-4" />
-              Mesaj Gönder
+              WhatsApp ile Gönder
             </Button>
           </form>
         </CardContent>
@@ -253,15 +229,15 @@ export default function ContactPage() {
           <div className="space-y-3">
             <div className="flex items-center space-x-3">
               <Phone className="h-5 w-5 text-black" />
-              <span className="text-gray-700">+90 342 123 45 67</span>
+              <a href="tel:+905348654072" className="text-gray-700 hover:text-black">0534 865 40 72</a>
             </div>
             <div className="flex items-center space-x-3">
-              <Mail className="h-5 w-5 text-black" />
-              <span className="text-gray-700">info@sardatekstil.com</span>
+              <MapPin className="h-5 w-5 text-black" />
+              <span className="text-gray-700">Ünaldı, Mıhcı Zekeriya Sk. No:31, 27100 Şahinbey/Gaziantep</span>
             </div>
             <div className="flex items-center space-x-3">
               <Clock className="h-5 w-5 text-black" />
-              <span className="text-gray-700">Pazartesi - Cuma: 08:00 - 18:00</span>
+              <span className="text-gray-700">24 saat açık</span>
             </div>
           </div>
         </CardContent>
@@ -270,7 +246,7 @@ export default function ContactPage() {
 
     {/* Map & Additional Info */}
     <div className="space-y-8">
-      {/* Map - Embedded (Gaziantep random placeholder) */}
+      {/* Map - Embedded */}
       <Card className="border-0 shadow-lg">
         <CardContent className="p-0">
           <div className="aspect-[4/3] rounded-lg overflow-hidden">
@@ -293,8 +269,8 @@ export default function ContactPage() {
             <div className="flex items-start space-x-3">
               <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
               <div>
-                <h4 className="font-medium text-black">25+ Yıllık Deneyim</h4>
-                <p className="text-gray-600 text-sm">Sektördeki uzun deneyimimizle güvenilir çözümler sunuyoruz.</p>
+                <h4 className="font-medium text-black">Yerel Üretim</h4>
+                <p className="text-gray-600 text-sm">Ürünlerimizi Gaziantep'te kendi üretimimizle hazırlıyoruz.</p>
               </div>
             </div>
             <div className="flex items-start space-x-3">

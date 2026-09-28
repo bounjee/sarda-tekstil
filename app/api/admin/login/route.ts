@@ -4,13 +4,16 @@ export async function POST(request: Request) {
   const body = await request.json()
   const { username, password, redirect } = body || {}
 
+  const { ADMIN_USERNAME, ADMIN_PASSWORD, ADMIN_SESSION_SECRET } = process.env
   if (
-    username === process.env.ADMIN_USERNAME &&
-    password === process.env.ADMIN_PASSWORD
+    ADMIN_USERNAME && ADMIN_PASSWORD && ADMIN_SESSION_SECRET &&
+    username === ADMIN_USERNAME &&
+    password === ADMIN_PASSWORD
   ) {
-    const res = NextResponse.json({ success: true, redirect: redirect || '/admin' })
+    const safeRedirect = typeof redirect === 'string' && redirect.startsWith('/admin') ? redirect : '/admin'
+    const res = NextResponse.json({ success: true, redirect: safeRedirect })
     // Issue a cookie containing a secret so middleware can check
-    const sessionSecret = process.env.ADMIN_SESSION_SECRET || 'dev-secret'
+    const sessionSecret = ADMIN_SESSION_SECRET
     res.cookies.set('admin_session', sessionSecret, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

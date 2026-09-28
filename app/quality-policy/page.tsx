@@ -12,7 +12,7 @@ const qualityPrinciples = [
   {
     icon: Shield,
     title: "Kalite Güvencesi",
-    description: "Tüm üretim süreçlerimizde uluslararası kalite standartlarını uyguluyoruz."
+    description: "Tüm üretim süreçlerimizde yüksek kalite standartlarını uyguluyoruz."
   },
   {
     icon: Award,
@@ -39,13 +39,6 @@ const qualityPrinciples = [
     title: "İnovasyon",
     description: "Yenilikçi yaklaşımlarla kalite standartlarımızı sürekli yükseltiyoruz."
   }
-]
-
-const certifications = [
-  { name: "ISO 9001:2015", description: "Kalite Yönetim Sistemi" },
-  { name: "OEKO-TEX Standard 100", description: "Tekstil Güvenlik Standardı" },
-  { name: "CE Uygunluk", description: "Avrupa Uygunluk Belgesi" },
-  { name: "TSE Belgesi", description: "Türk Standartları Enstitüsü" }
 ]
 
 export default function QualityPolicyPage() {
@@ -97,7 +90,7 @@ export default function QualityPolicyPage() {
           <h1 className="text-4xl lg:text-5xl font-bold text-black">Kalite Politikamız</h1>
           <p className="text-lg text-gray-600 leading-relaxed">
             Sarda Tekstil olarak, müşterilerimize en yüksek kalitede ürün ve hizmet sunmak 
-            için sürekli gelişim ve mükemmellik anlayışını benimser, uluslararası standartlarda 
+            için sürekli gelişim ve mükemmellik anlayışını benimser, yüksek standartlarda 
             üretim yaparız.
           </p>
         </div>
@@ -137,8 +130,8 @@ export default function QualityPolicyPage() {
               <div className="space-y-6">
                 <h2 className="text-3xl lg:text-4xl font-bold text-black">Kalite Taahhüdümüz</h2>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  25 yılı aşkın deneyimimizle, tekstil sektöründe kalite standartlarını 
-                  belirleyen öncü firmalardan biri olmaktan gurur duyuyoruz.
+                  Tekstil üretiminde kaliteyi her aşamada önceliğimiz olarak görüyor, 
+                  ürünlerimizi bu anlayışla hazırlıyoruz.
                 </p>
               </div>
               
@@ -172,36 +165,11 @@ export default function QualityPolicyPage() {
                   controls
                   playsInline
                   className="w-full h-full object-cover object-left"
-                  poster="/placeholder-yaa84.png"
+                  poster="/tv8_5-poster.jpg"
+                  preload="none"
                 />
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Certifications */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center space-y-6 mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-black">Sertifikalarımız</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Kalite standartlarımızı belgeleyen uluslararası sertifikalar
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {certifications.map((cert, index) => (
-              <Card key={index} className="text-center border-0 shadow-sm hover:shadow-lg transition-shadow duration-300">
-                <CardContent className="p-6 space-y-3">
-                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto">
-                    <Award className="h-6 w-6 text-white" />
-                  </div>
-                  <h3 className="font-semibold text-black">{cert.name}</h3>
-                  <p className="text-sm text-gray-600">{cert.description}</p>
-                </CardContent>
-              </Card>
-            ))}
           </div>
         </div>
       </section>
