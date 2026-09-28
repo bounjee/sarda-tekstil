@@ -23,7 +23,8 @@ export default function AddProduct() {
     body.append('file', file)
     const res = await fetch('/api/upload', { method: 'POST', body })
     if (!res.ok) {
-      alert('Dosya yüklenemedi')
+      const err = await res.json().catch(() => null)
+      alert(err?.message || 'Dosya yüklenemedi')
       setUploading(false)
       return
     }

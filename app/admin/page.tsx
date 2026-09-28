@@ -63,11 +63,22 @@ export default function AdminDashboard() {
               <span className="text-gray-400">|</span>
               <span className="text-lg font-medium text-gray-700">Admin Panel</span>
             </div>
-            <Link href="/">
-              <Button variant="outline" className="border-gray-300">
-                Siteye Dön
+            <div className="flex items-center gap-2">
+              <Link href="/">
+                <Button variant="outline" className="border-gray-300">
+                  Siteye Dön
+                </Button>
+              </Link>
+              <Button
+                variant="ghost"
+                onClick={async () => {
+                  await fetch('/api/admin/logout', { method: 'POST' })
+                  window.location.href = '/admin/login'
+                }}
+              >
+                Çıkış Yap
               </Button>
-            </Link>
+            </div>
           </div>
         </div>
       </header>

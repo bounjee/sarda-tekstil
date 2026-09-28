@@ -3,8 +3,8 @@
 import Link from "next/link"
 import Image from "next/image"
 import { SiteFooter } from "@/components/SiteFooter"
+import { SiteHeader } from "@/components/SiteHeader"
 import { ArrowRight } from 'lucide-react'
-import { buildWhatsAppLink } from '@/lib/constants'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -32,35 +32,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="border-b border-gray-100 sticky top-0 bg-white/95 backdrop-blur-sm z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Image src="/logo.svg" alt="Sarda Tekstil" width={32} height={32} className="h-8 w-8" />
-              <span className="text-xl font-bold text-black">Sarda Tekstil</span>
-            </div>
-            <nav className="hidden md:flex items-center justify-center space-x-8 flex-1">
-              <Link href="/" className="text-gray-700 hover:text-black transition-colors font-semibold">
-                Ana Sayfa
-              </Link>
-              <Link href="/products" className="text-gray-700 hover:text-black transition-colors font-semibold">
-                Ürünler
-              </Link>
-              <Link href="/about" className="text-gray-700 hover:text-black transition-colors font-semibold">
-                Hakkımızda
-              </Link>
-              <Link href="/contact" className="text-gray-700 hover:text-black transition-colors font-semibold">
-                İletişim
-              </Link>
-            </nav>
-            <a href={buildWhatsAppLink()} target="_blank" rel="noopener noreferrer">
-              <Button>
-                Whatsapp İletişim
-              </Button>
-            </a>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -81,7 +53,7 @@ export default function HomePage() {
         {/* Content */}
         <div className="relative z-10 text-center text-white space-y-8 max-w-4xl mx-auto px-4">
           <div className="space-y-6 animate-fade-in">
-            <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight">
               Geleneksel Sanatın
               <span className="block text-gray-200">Modern Yorumu</span>
             </h1>

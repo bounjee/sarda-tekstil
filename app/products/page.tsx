@@ -4,13 +4,12 @@ import { useState, useEffect, Suspense } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Search, Filter, Grid, List, ArrowLeft } from 'lucide-react'
-import { buildWhatsAppLink } from '@/lib/constants'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { ImageWithFallback } from "@/components/image-with-fallback"
 import { SiteFooter } from "@/components/SiteFooter"
+import { SiteHeader } from "@/components/SiteHeader"
 import { LoadingCard, LoadingSpinner } from "@/components/loading-spinner"
 import { ErrorBoundary } from "@/components/error-boundary"
 
@@ -105,35 +104,7 @@ function ProductsContent() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="border-b border-gray-100 sticky top-0 bg-white/95 backdrop-blur-sm z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <ImageWithFallback src="/logo.svg" alt="Sarda Tekstil" width={32} height={32} className="h-8 w-8" />
-              <span className="text-xl font-bold text-black">Sarda Tekstil</span>
-            </Link>
-            <nav className="hidden md:flex items-center justify-center space-x-8 flex-1">
-              <Link href="/" className="text-gray-700 hover:text-black transition-colors font-semibold">
-                Ana Sayfa
-              </Link>
-              <Link href="/products" className="text-black font-bold">
-                Ürünler
-              </Link>
-              <Link href="/about" className="text-gray-700 hover:text-black transition-colors font-semibold">
-                Hakkımızda
-              </Link>
-              <Link href="/contact" className="text-gray-700 hover:text-black transition-colors font-semibold">
-                İletişim
-              </Link>
-            </nav>
-            <a href={buildWhatsAppLink()} target="_blank" rel="noopener noreferrer">
-              <Button>
-                Whatsapp İletişim
-              </Button>
-            </a>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       {/* Breadcrumb */}
       <div className="container mx-auto px-4 py-6">

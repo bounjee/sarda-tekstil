@@ -14,9 +14,9 @@ export default function AdminSettings() {
   const [settings, setSettings] = useState({
     siteName: 'Sarda Tekstil',
     siteDescription: 'Geleneksel sanatın modern yorumu ile kaliteli tekstil ürünleri üretiyoruz.',
-    contactEmail: 'info@sardatekstil.com',
-    contactPhone: '+90 342 123 45 67',
-    contactAddress: 'Gaziantep Organize Sanayi Bölgesi, 1. Cadde No: 25, 27000 Şehitkamil / Gaziantep',
+    contactEmail: '',
+    contactPhone: '0534 865 40 72',
+    contactAddress: 'Ünaldı, Mıhcı Zekeriya Sk. No:31, 27100 Şahinbey/Gaziantep',
     socialMedia: {
       facebook: '',
       instagram: '',
@@ -27,15 +27,15 @@ export default function AdminSettings() {
     },
     seo: {
       metaTitle: 'Sarda Tekstil - Kilim ve Bukle Üretimi',
-      metaDescription: 'Gaziantep\'te 25 yıldır kaliteli kilim ve bukle üretimi yapan Sarda Tekstil. Geleneksel sanatın modern yorumu.',
+      metaDescription: 'Gaziantep\'te kaliteli kilim ve bukle üretimi yapan Sarda Tekstil. Geleneksel sanatın modern yorumu.',
       keywords: 'kilim, bukle, tekstil, Gaziantep, el dokuma'
     },
     footer: {
       year: new Date().getFullYear(),
       company: 'Sarda Tekstil',
       address: 'Gaziantep, Türkiye',
-      phone: '+90 342 123 45 67',
-      email: 'info@sardatekstil.com',
+      phone: '0534 865 40 72',
+      email: '',
       productsTitle: 'Ürünler',
       corporateTitle: 'Kurumsal',
       contactTitle: 'İletişim',
@@ -202,52 +202,6 @@ export default function AdminSettings() {
               </CardContent>
             </Card>
 
-            {/* Sosyal Medya */}
-            <Card className="border-0 shadow-sm">
-              <CardHeader>
-                <CardTitle>Sosyal Medya Hesapları</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="facebook">Facebook</Label>
-                    <Input
-                      id="facebook"
-                      value={settings.socialMedia.facebook}
-                      onChange={(e) => updateSetting('socialMedia.facebook', e.target.value)}
-                      placeholder="https://facebook.com/sardatekstil"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="instagram">Instagram</Label>
-                    <Input
-                      id="instagram"
-                      value={settings.socialMedia.instagram}
-                      onChange={(e) => updateSetting('socialMedia.instagram', e.target.value)}
-                      placeholder="https://instagram.com/sardatekstil"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="linkedin">LinkedIn</Label>
-                    <Input
-                      id="linkedin"
-                      value={settings.socialMedia.linkedin}
-                      onChange={(e) => updateSetting('socialMedia.linkedin', e.target.value)}
-                      placeholder="https://linkedin.com/company/sardatekstil"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="twitter">Twitter</Label>
-                    <Input
-                      id="twitter"
-                      value={settings.socialMedia.twitter}
-                      onChange={(e) => updateSetting('socialMedia.twitter', e.target.value)}
-                      placeholder="https://twitter.com/sardatekstil"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
 
             {/* SEO Ayarları */}
             <Card className="border-0 shadow-sm">

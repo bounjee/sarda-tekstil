@@ -20,7 +20,7 @@ export async function GET(_req: Request, context: { params: Promise<{ name: stri
   if (!type) return new Response('Not found', { status: 404 })
   try {
     const data = await fs.readFile(path.join(UPLOADS_DIR, safe))
-    return new Response(data, {
+    return new Response(new Uint8Array(data), {
       headers: { 'Content-Type': type, 'Cache-Control': 'public, max-age=31536000, immutable' },
     })
   } catch {

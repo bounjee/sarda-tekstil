@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import "./globals.css"
 import { ErrorBoundary } from "@/components/error-boundary"
 import { Toaster } from "@/components/ui/toaster"
+import { BUSINESS, SITE_URL } from "@/lib/site"
 
 const inter = Inter({ subsets: ["latin", "latin-ext"] })
 
@@ -41,9 +42,28 @@ export const metadata: Metadata = {
     title: 'Sarda Tekstil - Geleneksel Sanatın Modern Yorumu',
     description: 'Gaziantep\'in köklü tekstil geleneğini modern tasarım anlayışıyla buluşturarak, kilim ve bukle üretiyoruz.',
   },
+  alternates: { canonical: '/' },
   icons: {
     icon: [{ url: '/logo.svg', type: 'image/svg+xml' }],
   },
+}
+
+const localBusinessJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: BUSINESS.name,
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo.svg`,
+  telephone: BUSINESS.phoneE164,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: BUSINESS.streetAddress,
+    postalCode: BUSINESS.postalCode,
+    addressLocality: BUSINESS.locality,
+    addressRegion: BUSINESS.region,
+    addressCountry: BUSINESS.country,
+  },
+  openingHours: 'Mo-Su 00:00-24:00',
 }
 
 export default function RootLayout({
@@ -54,6 +74,10 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <body className={inter.className}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        />
         <ErrorBoundary>
           {children}
           <Toaster />
