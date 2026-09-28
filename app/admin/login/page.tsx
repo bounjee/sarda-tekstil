@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 
-export default function AdminLoginPage() {
+function AdminLoginForm() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const searchParams = useSearchParams()
@@ -43,3 +43,11 @@ export default function AdminLoginPage() {
 }
 
 
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <AdminLoginForm />
+    </Suspense>
+  )
+}
